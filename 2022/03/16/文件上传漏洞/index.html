@@ -13,12 +13,12 @@
   <meta name="description" content="文件上传漏洞前提之webshellWebShell , 简称网页后门。简单来说它是运行在Web应用之上的远程控制程序，他其实是一张网页，一般会具备文件管理、端口扫描等功能。 分类大马：功能较完整的webshell，代码量大，会有很多限制 小马：功能简易的webshell，代码量小，运行的时候需要环境 php一句话木马解读1&lt;?php @eval($_POST[x]); ?&gt;   $_P">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/2022/03/16/%E6%88%91%E7%9A%84%E6%96%87%E7%AB%A0/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/index.html">
+<meta property="og:url" content="http://example.com/2022/03/16/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="文件上传漏洞前提之webshellWebShell , 简称网页后门。简单来说它是运行在Web应用之上的远程控制程序，他其实是一张网页，一般会具备文件管理、端口扫描等功能。 分类大马：功能较完整的webshell，代码量大，会有很多限制 小马：功能简易的webshell，代码量小，运行的时候需要环境 php一句话木马解读1&lt;?php @eval($_POST[x]); ?&gt;   $_P">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-03-16T04:38:44.279Z">
-<meta property="article:modified_time" content="2022-01-28T04:03:48.026Z">
+<meta property="article:modified_time" content="2022-03-22T05:39:21.033Z">
 <meta property="article:author" content="Whirlpool">
 <meta name="twitter:card" content="summary">
   
@@ -211,7 +211,7 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-我的文章/文件上传漏洞" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-文件上传漏洞" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
   <div class="article-entry" itemprop="articleBody">
@@ -226,6 +226,8 @@
 <li>eval（）：函数，将字符串当做PHP代码去执行。</li>
 <li>错误控制运算符，当将 <code>@</code>放置在一个PHP表达式之前，该表达式可能产生的任何错误信息都被 忽略掉</li>
 </ol>
+<span id="more"></span>
+
 <h5 id="常用的一句话木马"><a href="#常用的一句话木马" class="headerlink" title="常用的一句话木马"></a>常用的一句话木马</h5><ul>
 <li>ASP：</li>
 </ul>
@@ -323,41 +325,9 @@
 <p>前提条件是:大于等于php版本5.3.39以下</p>
 <p>三、配合web容器的解析漏洞：<br>  <code>IIS中的目录解析漏洞和分号解析漏洞</code>： 将一句话木马的文件名backlion.php，改成backlion.php.abc<br> 首先，服务器验证文件扩展名的时候，验证的是.abc，只要该扩展名符合服务器端黑白名单规则，就能上传。</p>
 <p><code>  apache的解析漏洞</code>:上传如a.php.rar a.php.gif 类型的文件名，可以避免对于php文件的过滤机制，但是由于apache在解析文件名的时候是从右向左读，如果遇到不能识别的扩展名则跳过，rar等扩展名是apache不能识别的，因此就会直接将类型识别为php，从而达到了注入php代码的目的</p>
-<h4 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h4>
-    
 
     
-    <div class="page-reward">
-      <a href="javascript:void(0);" class="page-reward-btn tooltip-top" target="_self">
-        <div class="tooltip tooltip-east">
-          <span class="tooltip-item">
-            赏
-          </span>
-          <span class="tooltip-content">
-            <span class="tooltip-text">
-              <span class="tooltip-inner">
-                <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i
-                    class="icon icon-quo-right"></i></p>
-                <div class="reward-box">
-                  
-                  <div class="reward-box-item">
-                    <img class="reward-img" src="/img/alipay.jpg">
-                    <span class="reward-type">支付宝</span>
-                  </div>
-                  
-                  
-                  <div class="reward-box-item">
-                    <img class="reward-img" src="/img/weixin.png">
-                    <span class="reward-type">微信</span>
-                  </div>
-                  
-                </div>
-              </span>
-            </span>
-          </span>
-        </div>
-      </a>
-    </div>
+
     
 
     
@@ -369,7 +339,7 @@
         </li>
         <li>
           <strong>本文链接：</strong>
-          <a href="http://example.com/2022/03/16/我的文章/文件上传漏洞/" title="" target="_blank">http://example.com/2022/03/16/我的文章/文件上传漏洞/</a>
+          <a href="http://example.com/2022/03/16/文件上传漏洞/" title="" target="_blank">http://example.com/2022/03/16/文件上传漏洞/</a>
         </li>
         
         <li>
@@ -436,7 +406,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-     <!-- <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2022/03/16/%E6%88%91%E7%9A%84%E6%96%87%E7%AB%A0/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/" alt="微信分享二维码"> -->
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2022/03/16/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/" alt="微信分享二维码"> -->
     </div>
 </div>
 
@@ -451,7 +421,7 @@
 
 <nav id="article-nav">
   
-    <a href="/2022/03/16/%E6%88%91%E7%9A%84%E6%96%87%E7%AB%A0/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E5%AE%9E%E6%88%98/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2022/03/16/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E5%AE%9E%E6%88%98/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
@@ -461,7 +431,7 @@
     </a>
   
   
-    <a href="/2022/03/07/%E6%88%91%E7%9A%84%E6%96%87%E7%AB%A0/xss%E9%9D%B6%E5%9C%BA/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2022/03/07/xss%E9%9D%B6%E5%9C%BA/" id="article-nav-older" class="article-nav-link-wrap">
       <div class="article-nav-title"></div>
       <i class="icon-circle-right"></i>
     </a>
@@ -481,6 +451,19 @@
             </div>
         </div>
         
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E"><span class="toc-number">1.</span> <span class="toc-text">文件上传漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%89%8D%E6%8F%90%E4%B9%8Bwebshell"><span class="toc-number">1.1.</span> <span class="toc-text">前提之webshell</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%88%86%E7%B1%BB"><span class="toc-number">1.1.1.</span> <span class="toc-text">分类</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#php%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%9C%A8%E9%A9%AC%E8%A7%A3%E8%AF%BB"><span class="toc-number">1.1.2.</span> <span class="toc-text">php一句话木马解读</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E7%9A%84%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%9C%A8%E9%A9%AC"><span class="toc-number">1.1.3.</span> <span class="toc-text">常用的一句话木马</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%A7%E7%94%9F%E5%8E%9F%E5%9B%A0"><span class="toc-number">1.2.</span> <span class="toc-text">产生原因</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E7%9A%84%E7%BB%95%E8%BF%87"><span class="toc-number">1.3.</span> <span class="toc-text">文件上传漏洞的绕过</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
         
     </div>
 </aside>
