@@ -6,15 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Archives: 2022 | Hexo</title>
+  <title>Hexo</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta property="og:type" content="website">
+  <meta name="description" content="正则匹配 ​    1、正则表达式的格式？ ​        “&#x2F;表达式&#x2F;[修饰符]” ​    2、正则表达式的用途是什么？ （1）判断字符串是否符合某一规则（比如判断是否符合手机号、邮箱规则等等） （2）从一个字符串中找出符合规则的所有子字符串（比如取HTML标签名等等） ​    3、当使用正则表达式时要注意什么？ 在php中使用正则表达式时一定要写标识符&#x2F;&amp;#">
+<meta property="og:type" content="article">
 <meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/archives/2022/index.html">
+<meta property="og:url" content="http://example.com/2022/02/24/%E6%88%91%E7%9A%84%E6%96%87%E7%AB%A0/%E6%AD%A3%E5%88%99%E5%8C%B9%E9%85%8D/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="正则匹配 ​    1、正则表达式的格式？ ​        “&#x2F;表达式&#x2F;[修饰符]” ​    2、正则表达式的用途是什么？ （1）判断字符串是否符合某一规则（比如判断是否符合手机号、邮箱规则等等） （2）从一个字符串中找出符合规则的所有子字符串（比如取HTML标签名等等） ​    3、当使用正则表达式时要注意什么？ 在php中使用正则表达式时一定要写标识符&#x2F;&amp;#">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-02-24T13:26:43.181Z">
+<meta property="article:modified_time" content="2022-02-24T13:26:43.311Z">
 <meta property="article:author" content="Whirlpool">
 <meta name="twitter:card" content="summary">
   
@@ -207,238 +211,247 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-我的文章/正则匹配" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+  <div class="article-entry" itemprop="articleBody">
     
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2022" class="archive-year">2022</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2022/03/16/%E6%88%91%E7%9A%84%E6%96%87%E7%AB%A0/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E5%AE%9E%E6%88%98/" class="archive-article-date">
-        <time datetime="2022-03-16T04:49:01.216Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-03-16</time>
-</a>
+    <h3 id="正则匹配"><a href="#正则匹配" class="headerlink" title="正则匹配"></a>正则匹配</h3><blockquote>
+<p>​    1、正则表达式的格式？</p>
+<p>​        “&#x2F;表达式&#x2F;[修饰符]”</p>
+<p>​    2、正则表达式的用途是什么？</p>
+<p>（1）判断字符串是否符合某一规则（比如判断是否符合手机号、邮箱规则等等）</p>
+<p>（2）从一个字符串中找出符合规则的所有子字符串（比如取HTML标签名等等）</p>
+<p>​    3、当使用正则表达式时要注意什么？</p>
+<p>在php中使用正则表达式时一定要写标识符&#x2F;&#x2F;（ &#x2F;表达式&#x2F; ）</p>
+<p>​    5、php中正则表达式常用相关函数是什么？</p>
+<p>Preg_match_all(正则表达式、匹配字符串、匹配到的东西放入数组)</p>
+<p>该函数会返回匹配到的次数（可能是0），或者如果发生错误返回FALSE</p>
+<p>preg_replace(正则表达式、替换成什么、匹配字符串)说</p>
+<p>该函数会返回替换后的结果</p>
+<p>​    6、正则表达式的语法——字符（一）</p>
+<p>数字：\d</p>
+<p>非数字：\D</p>
+<p>空白字符（空格、制表符、换页符等）：\s</p>
+<p>非空白字符：\S</p>
+<p>单词字符（26个英文字母+数字+下划线）：\w</p>
+<p>非单词字符：\W</p>
+<p>​    7、正则表达式的语法——字符（二）</p>
+<p>字符集合：[单个字符或字符区间]，用于匹配集合内字符</p>
+<p>比如：</p>
+<p>[a-z]表示a-z这26个小写字母</p>
+<p>[0-9a-z]表示0-9这10个数字和a-z这26个小写字母</p>
+<p>[123a-h]表示包含数字1，2，3和a-h这8个字母</p>
+<p>注意：两个不同的字符段间一定不要用逗号隔开</p>
+<p>非集合字符：[^单个字符或字符区间]，用于匹配非集合内字符</p>
+<p>比如：</p>
+<p>[^0-9]表示匹配所有非数字字符</p>
+<p>[^a-zA-Z]表示匹配所有非字母字符</p>
+<p>​    8、字符集合的数字区间该注意什么？</p>
+<p>数字区间正则只能匹配0-9的数字，因为正则只能一位一位的匹配，所以超过9以外的数字只是我们给的概念，对于正则机制来说它是认不到的，比如[100-120]就无法被匹配</p>
+<p>​    9、正则表达式的语法——关键字</p>
+<p>() 表示一个整体</p>
+<p>^ 匹配输入字符串的开始位置</p>
+<p>$ 匹配输入字符串的结尾位置</p>
+<p>. 通配符，代表任意字符但不匹配换行</p>
+<p>* 匹配0次或者多次           </p>
+<p>+ 匹配1次或者多次</p>
+<p>\ 转义字符</p>
+<p>| 两项之间的一个选择</p>
+<p>​    10、转义字符“\”的使用</p>
+<p>转义字符主要是将一些特殊字符转为普通字符。而这些常用特殊字符有”.”、”?”、”\”等。</p>
+<p>​    11、^和$结合使用的注意问题？</p>
+<p>如果^和$结合使用且中间没有其他表达式，那么他们中间就不能出现别的字符，不然无法匹配，比如&#x2F;^3b$&#x2F;表示3开头b结尾，所以只有3b才能被匹配，如果写了3acb就无法被匹配。什么情况下才能被匹配呢，可以使用.（通配符）。</p>
+<p>​    12、非集合字符的“^”和关键字“^”的区别？</p>
+<p>非集合字符的“^”可理解为排除字符，排除操作，一般放在［］中，如［^1-5］, 表示该字符不是1-5之间的数字；而关键字的“^”表示行开始，如”^ab”表示以ab开头的字符串。</p>
+<p>​    13、正则表达式的语法——限定符</p>
+<p>{n} 例如0{8} 表示只有连起来8个0才会被匹配</p>
+<p>{n,} 例如0{2,} 表示只要2个0及其以上的就会被匹配</p>
+<p>{n,m} 例如0{2,4} 表示最少匹配2个0，最多匹配4个0</p>
+<p>注：被匹配时，默认匹配最多的次数</p>
+<p>​    14、正则表达式的语法——修饰符</p>
+<p>i 表示不区分大小写</p>
+<p>A 匹配规则必须从头开始匹配</p>
+<p>s 表示.将匹配一切字符</p>
+<p>x 表示正则表达式中的空白字符会被忽略</p>
+<p>e 代码执行仅限preg_replace()</p>
+<p>​    15、匹配模式的优先级是什么？（优先级从高到低排）</p>
+<p>\转义字符；()[]大原子和原子表；*+?{n}{n,}{n,m}重复匹配（匹配次数）；^$\b\B边界限制；|模式选择</p>
+</blockquote>
+<p>“.*”:  匹配任意字符</p>
 
-        </div>
-    	 
+    
 
-        <div class="article-info info-on-right">
+    
+    <div class="page-reward">
+      <a href="javascript:void(0);" class="page-reward-btn tooltip-top" target="_self">
+        <div class="tooltip tooltip-east">
+          <span class="tooltip-item">
+            赏
+          </span>
+          <span class="tooltip-content">
+            <span class="tooltip-text">
+              <span class="tooltip-inner">
+                <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i
+                    class="icon icon-quo-right"></i></p>
+                <div class="reward-box">
+                  
+                  <div class="reward-box-item">
+                    <img class="reward-img" src="/img/alipay.jpg">
+                    <span class="reward-type">支付宝</span>
+                  </div>
+                  
+                  
+                  <div class="reward-box-item">
+                    <img class="reward-img" src="/img/weixin.png">
+                    <span class="reward-type">微信</span>
+                  </div>
+                  
+                </div>
+              </span>
+            </span>
+          </span>
+        </div>
+      </a>
+    </div>
+    
+
+    
+    <div class="declare"> 
+      <ul class="post-copyright">
+        <li>
+          <strong>本文作者：</strong>
+          Whirlpool
+        </li>
+        <li>
+          <strong>本文链接：</strong>
+          <a href="http://example.com/2022/02/24/我的文章/正则匹配/" title="" target="_blank">http://example.com/2022/02/24/我的文章/正则匹配/</a>
+        </li>
+        
+        <li>
+          <strong>版权声明： </strong>
           
-          
+          本博客所有文章除特别声明外，均采用 <a href="https://github.com/JoeyBling/hexo-theme-yilia-plus/blob/master/LICENSE" rel="external nofollow" target="_blank">MIT</a> 许可协议。转载请注明出处！
+        </li>
+        
+      </ul>
+    </div>
+    
 
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+    
+
+    
+
+    
+    
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a> -->
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2022/02/24/%E6%88%91%E7%9A%84%E6%96%87%E7%AB%A0/%E6%AD%A3%E5%88%99%E5%8C%B9%E9%85%8D/" alt="微信分享二维码"> -->
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+
+    
+    <div class="clearfix"></div>
+  </div>
   </div>
 </article>
+
+
+<nav id="article-nav">
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2022/03/16/%E6%88%91%E7%9A%84%E6%96%87%E7%AB%A0/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/" class="archive-article-date">
-        <time datetime="2022-03-16T04:38:44.279Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-03-16</time>
-</a>
-
-        </div>
-    	 
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2022/03/07/%E6%88%91%E7%9A%84%E6%96%87%E7%AB%A0/xss%E9%9D%B6%E5%9C%BA/" class="archive-article-date">
-        <time datetime="2022-03-07T12:03:58.773Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-03-07</time>
-</a>
-
-        </div>
-    	 
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2022/03/01/%E6%88%91%E7%9A%84%E6%96%87%E7%AB%A0/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B3%A8%E5%85%A5/" class="archive-article-date">
-        <time datetime="2022-03-01T14:45:59.975Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-03-01</time>
-</a>
-
-        </div>
-    	 
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2022/02/27/%E6%88%91%E7%9A%84%E6%96%87%E7%AB%A0/sql%E5%9F%BA%E7%A1%80/" class="archive-article-date">
-        <time datetime="2022-02-27T08:24:39.300Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-02-27</time>
-</a>
-
-        </div>
-    	 
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2022/02/27/%E6%88%91%E7%9A%84%E6%96%87%E7%AB%A0/sqlmap%E5%9F%BA%E7%A1%80/" class="archive-article-date">
-        <time datetime="2022-02-27T07:38:59.257Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-02-27</time>
-</a>
-
-        </div>
-    	 
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2022/02/24/%E6%88%91%E7%9A%84%E6%96%87%E7%AB%A0/%E6%AD%A3%E5%88%99%E5%8C%B9%E9%85%8D/" class="archive-article-date">
-        <time datetime="2022-02-24T13:26:43.181Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-02-24</time>
-</a>
-
-        </div>
-    	 
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2022/02/23/%E6%88%91%E7%9A%84%E6%96%87%E7%AB%A0/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/" class="archive-article-date">
-        <time datetime="2022-02-23T14:45:47.039Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-02-23</time>
-</a>
-
-        </div>
-    	 
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2022/02/23/%E6%88%91%E7%9A%84%E6%96%87%E7%AB%A0/%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" class="archive-article-date">
-        <time datetime="2022-02-23T11:22:10.784Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-02-23</time>
-</a>
-
-        </div>
-    	 
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+    <a href="/2022/02/27/%E6%88%91%E7%9A%84%E6%96%87%E7%AB%A0/sqlmap%E5%9F%BA%E7%A1%80/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
   
   
-    </div></section>
+    <a href="/2022/02/23/%E6%88%91%E7%9A%84%E6%96%87%E7%AB%A0/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title"></div>
+      <i class="icon-circle-right"></i>
+    </a>
   
+</nav>
 
-    
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+
+
+
+
+
+
 
 
           </div>
@@ -479,8 +492,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: true,

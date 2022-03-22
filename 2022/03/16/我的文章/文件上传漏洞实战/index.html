@@ -6,17 +6,37 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Archives: 2022 | Hexo</title>
+  <title>Hexo</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta property="og:type" content="website">
+  <meta name="description" content="文件上传漏洞实战 准备好上传的 shell.php文件（一句话木马）  1&lt;?php @eval(&amp;#x27;phpinfo();&amp;#x27;); ?&gt;  第一关：前端JS验证先上传一个文件上去看看效果，上传失败，说不允许上传PHP文件  根据弹窗  可以得出是前端JS验证。 绕过方法：禁用JS脚本。   上传成功   源码分析 1234567891011121314151617181">
+<meta property="og:type" content="article">
 <meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/archives/2022/index.html">
+<meta property="og:url" content="http://example.com/2022/03/16/%E6%88%91%E7%9A%84%E6%96%87%E7%AB%A0/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E5%AE%9E%E6%88%98/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="文件上传漏洞实战 准备好上传的 shell.php文件（一句话木马）  1&lt;?php @eval(&amp;#x27;phpinfo();&amp;#x27;); ?&gt;  第一关：前端JS验证先上传一个文件上去看看效果，上传失败，说不允许上传PHP文件  根据弹窗  可以得出是前端JS验证。 绕过方法：禁用JS脚本。   上传成功   源码分析 1234567891011121314151617181">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="c:/Users/86152/Desktop/新建文件夹/image-20220209121737567.png">
+<meta property="og:image" content="c:/Users/86152/Desktop/新建文件夹/image-20220209121911082.png">
+<meta property="og:image" content="c:/Users/86152/Desktop/新建文件夹/image-20220209122016081.png">
+<meta property="og:image" content="c:/Users/86152/Desktop/新建文件夹/image-20220209122032283.png">
+<meta property="og:image" content="c:/Users/86152/Desktop/新建文件夹/image-20220209122746814.png">
+<meta property="og:image" content="c:/Users/86152/Desktop/新建文件夹/image-20220209123320327.png">
+<meta property="og:image" content="c:/Users/86152/Desktop/新建文件夹/image-20220209123334150.png">
+<meta property="og:image" content="c:/Users/86152/Desktop/新建文件夹/image-20220209123553447.png">
+<meta property="og:image" content="c:/Users/86152/Desktop/新建文件夹/image-20220209123827120.png">
+<meta property="og:image" content="c:/Users/86152/Desktop/新建文件夹/image-20220210114027547.png">
+<meta property="og:image" content="c:/Users/86152/Desktop/新建文件夹/image-20220210114458151.png">
+<meta property="og:image" content="c:/Users/86152/Desktop/新建文件夹/image-20220210114637244.png">
+<meta property="og:image" content="c:/Users/86152/Desktop/新建文件夹/image-20220210115211432.png">
+<meta property="og:image" content="c:/Users/86152/Desktop/新建文件夹/image-20220210115737152.png">
+<meta property="og:image" content="c:/Users/86152/Desktop/新建文件夹/image-20220210124149521.png">
+<meta property="article:published_time" content="2022-03-16T04:49:01.216Z">
+<meta property="article:modified_time" content="2022-02-10T06:53:09.954Z">
 <meta property="article:author" content="Whirlpool">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="c:/Users/86152/Desktop/新建文件夹/image-20220209121737567.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -207,238 +227,348 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-我的文章/文件上传漏洞实战" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+  <div class="article-entry" itemprop="articleBody">
     
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2022" class="archive-year">2022</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2022/03/16/%E6%88%91%E7%9A%84%E6%96%87%E7%AB%A0/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E5%AE%9E%E6%88%98/" class="archive-article-date">
-        <time datetime="2022-03-16T04:49:01.216Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-03-16</time>
-</a>
+    <h3 id="文件上传漏洞实战"><a href="#文件上传漏洞实战" class="headerlink" title="文件上传漏洞实战"></a>文件上传漏洞实战</h3><ul>
+<li>准备好上传的 shell.php文件（一句话木马）</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php @eval(&#x27;phpinfo();&#x27;); ?&gt;</span><br></pre></td></tr></table></figure>
 
-        </div>
-    	 
+<h4 id="第一关：前端JS验证"><a href="#第一关：前端JS验证" class="headerlink" title="第一关：前端JS验证"></a>第一关：前端JS验证</h4><p>先上传一个文件上去看看效果，上传失败，说不允许上传PHP文件</p>
+<p><img src="C:\Users\86152\Desktop\新建文件夹\image-20220209121737567.png" alt="image-20220209121737567"></p>
+<p>根据弹窗</p>
+<ul>
+<li>可以得出是前端JS验证。</li>
+<li>绕过方法：禁用JS脚本。</li>
+</ul>
+<p><img src="C:\Users\86152\Desktop\新建文件夹\image-20220209121911082.png" alt="image-20220209121911082"></p>
+<p>上传成功</p>
+<p><img src="C:\Users\86152\Desktop\新建文件夹\image-20220209122016081.png" alt="image-20220209122016081"></p>
+<p><img src="C:\Users\86152\Desktop\新建文件夹\image-20220209122032283.png" alt="image-20220209122032283"></p>
+<p>源码分析</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkFile</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> file = document.<span class="title function_ invoke__">getElementsByName</span>(<span class="string">&#x27;upload_file&#x27;</span>)[<span class="number">0</span>].value;</span><br><span class="line">         <span class="comment">// 获取文件名</span></span><br><span class="line">  <span class="keyword">if</span> (file == <span class="literal">null</span> || file == <span class="string">&quot;&quot;</span>) &#123;</span><br><span class="line">    <span class="title function_ invoke__">alert</span>(<span class="string">&quot;请选择要上传的文件!&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">         <span class="comment">//定义允许上传的文件类型</span></span><br><span class="line">  <span class="keyword">var</span> allow_ext = <span class="string">&quot;.jpg|.png|.gif&quot;</span>;</span><br><span class="line">         <span class="comment">//提取上传文件的类型</span></span><br><span class="line">  <span class="keyword">var</span> ext_name = file.<span class="title function_ invoke__">substring</span>(file.<span class="title function_ invoke__">lastIndexOf</span>(<span class="string">&quot;.&quot;</span>));</span><br><span class="line">         <span class="comment">//判断上传文件类型是否允许上传</span></span><br><span class="line">         <span class="comment">//通过lastIndexOf取到“.”的索引，再使用substring函数截取 .后缀名</span></span><br><span class="line">  <span class="keyword">if</span> (allow_ext.<span class="title function_ invoke__">indexOf</span>(ext_name + <span class="string">&quot;|&quot;</span>) == -<span class="number">1</span>) &#123;</span><br><span class="line">         <span class="comment">//如果 allow_ext 中没有 ext_name字符串，则返回-1</span></span><br><span class="line">    <span class="keyword">var</span> errMsg = <span class="string">&quot;该文件不允许上传，请上传&quot;</span> + allow_ext + <span class="string">&quot;类型的文件,当前文件类型为：&quot;</span> + ext_name;</span><br><span class="line">    <span class="title function_ invoke__">alert</span>(errMsg);</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">         <span class="comment">//判断上传文件类型是否允许上传</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-        <div class="article-info info-on-right">
+
+
+<h4 id="第二关：服务端MIME验证"><a href="#第二关：服务端MIME验证" class="headerlink" title="第二关：服务端MIME验证"></a>第二关：服务端MIME验证</h4><ul>
+<li>根据提示：本pass在服务端对数据包的MIME进行检查！</li>
+<li>绕过方法：抓包，修改一下<code>Content-Type</code>字段。</li>
+<li>Content-Type: image&#x2F;png</li>
+</ul>
+<p><img src="C:\Users\86152\Desktop\新建文件夹\image-20220209122746814.png" alt="image-20220209122746814"></p>
+<p>上传成功。</p>
+<p>源码分析</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="variable">$is_upload</span> = <span class="literal">false</span>;</span><br><span class="line"><span class="variable">$msg</span> = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 当点击鼠标上传的时候，进行验证</span></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;submit&#x27;</span>])) &#123;</span><br><span class="line">  <span class="comment">// UPLOAD_PATH 声明在配置文件上的文件上传路径，来判断路径是否存在。</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="title function_ invoke__">file_exists</span>(UPLOAD_PATH)) &#123;</span><br><span class="line">      <span class="comment">// 进行上传文件类型判断， || 或的意思</span></span><br><span class="line">        <span class="keyword">if</span> ((<span class="variable">$_FILES</span>[<span class="string">&#x27;upload_file&#x27;</span>][<span class="string">&#x27;type&#x27;</span>] == <span class="string">&#x27;image/jpeg&#x27;</span>) || (<span class="variable">$_FILES</span>[<span class="string">&#x27;upload_file&#x27;</span>][<span class="string">&#x27;type&#x27;</span>] == <span class="string">&#x27;image/png&#x27;</span>) || (<span class="variable">$_FILES</span>[<span class="string">&#x27;upload_file&#x27;</span>][<span class="string">&#x27;type&#x27;</span>] == <span class="string">&#x27;image/gif&#x27;</span>)) &#123;</span><br><span class="line">            <span class="variable">$temp_file</span> = <span class="variable">$_FILES</span>[<span class="string">&#x27;upload_file&#x27;</span>][<span class="string">&#x27;tmp_name&#x27;</span>];</span><br><span class="line">            <span class="variable">$img_path</span> = UPLOAD_PATH . <span class="string">&#x27;/&#x27;</span> . <span class="variable">$_FILES</span>[<span class="string">&#x27;upload_file&#x27;</span>][<span class="string">&#x27;name&#x27;</span>]; </span><br><span class="line">          <span class="comment">// move_uploaded_file 移动文件函数，将前者移动到后者哪里</span></span><br><span class="line">            <span class="keyword">if</span> (<span class="title function_ invoke__">move_uploaded_file</span>(<span class="variable">$temp_file</span>, <span class="variable">$img_path</span>)) &#123;</span><br><span class="line">                <span class="variable">$is_upload</span> = <span class="literal">true</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="variable">$msg</span> = <span class="string">&#x27;上传出错！&#x27;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="variable">$msg</span> = <span class="string">&#x27;文件类型不正确，请重新上传！&#x27;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="variable">$msg</span> = UPLOAD_PATH.<span class="string">&#x27;文件夹不存在,请手工创建！&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="第三关：黑名单绕过"><a href="#第三关：黑名单绕过" class="headerlink" title="第三关：黑名单绕过"></a>第三关：黑名单绕过</h4><ul>
+<li><p>根据提示：本pass禁止上传.asp|.aspx|.php|.jsp后缀文件！</p>
+</li>
+<li><p>比较容易想的绕过方法：</p>
+</li>
+<li><ul>
+<li>大小写绕过</li>
+<li>用其他可被解析的后缀名来代替 : .phtml .phps .php5 .pht</li>
+</ul>
+</li>
+<li><p>大小写绕过失败！</p>
+</li>
+</ul>
+<p><img src="C:\Users\86152\Desktop\新建文件夹\image-20220209123320327.png" alt="image-20220209123320327"></p>
+<p><img src="C:\Users\86152\Desktop\新建文件夹\image-20220209123334150.png" alt="image-20220209123334150"></p>
+<ul>
+<li><p>尝试用其他后缀名</p>
+<p>phtml</p>
+<p>上传成功</p>
+<p><img src="C:\Users\86152\Desktop\新建文件夹\image-20220209123553447.png" alt="image-20220209123553447"></p>
+</li>
+<li><p>源码分析</p>
+</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$is_upload</span> = <span class="literal">false</span>;</span><br><span class="line"><span class="variable">$msg</span> = <span class="literal">null</span>;</span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;submit&#x27;</span>])) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="title function_ invoke__">file_exists</span>(UPLOAD_PATH)) &#123;</span><br><span class="line">      <span class="comment">// 声明了变量 deny_ext（拒绝_后缀名）</span></span><br><span class="line">        <span class="variable">$deny_ext</span> = <span class="keyword">array</span>(<span class="string">&#x27;.asp&#x27;</span>,<span class="string">&#x27;.aspx&#x27;</span>,<span class="string">&#x27;.php&#x27;</span>,<span class="string">&#x27;.jsp&#x27;</span>);</span><br><span class="line">      <span class="comment">// trim 过滤为空的函数，替换空格。自动去除空格</span></span><br><span class="line">        <span class="variable">$file_name</span> = <span class="title function_ invoke__">trim</span>(<span class="variable">$_FILES</span>[<span class="string">&#x27;upload_file&#x27;</span>][<span class="string">&#x27;name&#x27;</span>]);</span><br><span class="line">      <span class="comment">//trim去除字符创两侧的的特殊字符</span></span><br><span class="line">        <span class="variable">$file_name</span> = <span class="title function_ invoke__">deldot</span>(<span class="variable">$file_name</span>);<span class="comment">//删除文件名末尾的点，xiasohuang.jpg.php 防止上传验证为jpg格式实际上是php代码。</span></span><br><span class="line">      <span class="variable">$file_ext</span> = <span class="title function_ invoke__">strrchr</span>(<span class="variable">$file_name</span>, <span class="string">&#x27;.&#x27;</span>);</span><br><span class="line">      <span class="comment">// strrchr 分隔字符，就是删除掉.前面的文件名称，这样就得到了文件的真实后缀了。</span></span><br><span class="line">      <span class="comment">//取出后缀名 如：.txt</span></span><br><span class="line">        <span class="variable">$file_ext</span> = <span class="title function_ invoke__">strtolower</span>(<span class="variable">$file_ext</span>); <span class="comment">//转换为小写</span></span><br><span class="line">        <span class="variable">$file_ext</span> = <span class="title function_ invoke__">str_ireplace</span>(<span class="string">&#x27;::$DATA&#x27;</span>, <span class="string">&#x27;&#x27;</span>, <span class="variable">$file_ext</span>);<span class="comment">//去除字符串::$DATA，将目标中的::$DATA替换为空。</span></span><br><span class="line">        <span class="variable">$file_ext</span> = <span class="title function_ invoke__">trim</span>(<span class="variable">$file_ext</span>); <span class="comment">//收尾去空</span></span><br><span class="line"></span><br><span class="line">      <span class="comment">// 判断接收到的文件中，有没有黑名单里面的后缀，就继续进行文件上传，如果存在就不允许上传这个格式。</span></span><br><span class="line">        <span class="keyword">if</span>(!<span class="title function_ invoke__">in_array</span>(<span class="variable">$file_ext</span>, <span class="variable">$deny_ext</span>)) &#123;</span><br><span class="line">            <span class="variable">$temp_file</span> = <span class="variable">$_FILES</span>[<span class="string">&#x27;upload_file&#x27;</span>][<span class="string">&#x27;tmp_name&#x27;</span>];</span><br><span class="line">            <span class="variable">$img_path</span> = UPLOAD_PATH.<span class="string">&#x27;/&#x27;</span>.<span class="title function_ invoke__">date</span>(<span class="string">&quot;YmdHis&quot;</span>).<span class="title function_ invoke__">rand</span>(<span class="number">1000</span>,<span class="number">9999</span>).<span class="variable">$file_ext</span>;</span><br><span class="line">       <span class="comment">//获取当前时间 再连接上一个随机数和后缀名，生成一个新的文件名与上传路径拼接    </span></span><br><span class="line">            <span class="keyword">if</span> (<span class="title function_ invoke__">move_uploaded_file</span>(<span class="variable">$temp_file</span>,<span class="variable">$img_path</span>)) &#123;</span><br><span class="line">                 <span class="variable">$is_upload</span> = <span class="literal">true</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="variable">$msg</span> = <span class="string">&#x27;上传出错！&#x27;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="variable">$msg</span> = <span class="string">&#x27;不允许上传.asp,.aspx,.php,.jsp后缀文件！&#x27;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="variable">$msg</span> = UPLOAD_PATH . <span class="string">&#x27;文件夹不存在,请手工创建！&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="第四关：-htaccess绕过"><a href="#第四关：-htaccess绕过" class="headerlink" title="第四关：.htaccess绕过"></a>第四关：.htaccess绕过</h4><ul>
+<li>根据提示：</li>
+</ul>
+<p><img src="C:\Users\86152\Desktop\新建文件夹\image-20220209123827120.png" alt="image-20220209123827120"></p>
+<ul>
+<li><p>绕过方法：</p>
+<ul>
+<li><p>首先构建.htaccess，内容为</p>
+</li>
+<li><p>~~~php</p>
+<p>&lt;FilesMatch “1”&gt;<br>Sethandler application&#x2F;x-httpd-php</p>
+</Eilesmatch >
+
+<p>&#x2F;&#x2F; FilesMatch 文件匹配 ，如果匹配到文件中存在 “1” 就会将文件以解析 application&#x2F;x-httpd-php 类型进行解析。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">  - 然后上传一个1.jpg格式文件</span><br><span class="line"></span><br><span class="line">![image-20220209124508160](C:\Users\86152\Desktop\新建文件夹\image-20220209124508160.png)</span><br><span class="line"></span><br><span class="line">![image-20220209124518719](C:\Users\86152\Desktop\新建文件夹\image-20220209124518719.png)</span><br><span class="line"></span><br><span class="line">- 漏洞分析</span><br><span class="line"></span><br><span class="line">  - 这是解析漏洞 只有apache才有。</span><br><span class="line"></span><br><span class="line">  - .htaccess文件(或者&quot;分布式配置文件&quot;）,全称是Hypertext Access(超文本入口)。</span><br><span class="line"></span><br><span class="line">  - 提供了针对目录改变配置的方法， 即，在一个特定的文档目录中放置一个包含一个或多个指令的文件， 以作用于此目录及其所有子目录。作为用户，所能使用的命令受到限制。管理员可以通过Apache的AllowOverride指令来设置。</span><br><span class="line"></span><br><span class="line">  - 这个漏洞的原理就是服务器没有过滤htaccess文件的上传，而htaccess文件上传后，当前目录就会按照这个配置文件里面的内容执行。</span><br><span class="line"></span><br><span class="line">#### 第五关：.user.ini 绕过</span><br><span class="line"></span><br><span class="line">- user.ini文件构成的PHP后门</span><br><span class="line">- 根据提示：上传目录存在php文件（readme.php）</span><br><span class="line"></span><br><span class="line">- 绕过方法：</span><br><span class="line"></span><br><span class="line">- - 复写后缀名绕过</span><br><span class="line">  - 先上传`.user.ini`文件，然后再上传一个1.jpg文件，实现绕过。</span><br><span class="line"></span><br><span class="line">```php</span><br><span class="line">.user.ini文件内容：</span><br><span class="line"></span><br><span class="line">auto_prepend_file=1.jpg</span><br><span class="line">```</span><br><span class="line"></span><br><span class="line">法1</span><br><span class="line"></span><br><span class="line">![image-20220209125130979](C:\Users\86152\Desktop\新建文件夹\image-20220209125130979.png)</span><br><span class="line"></span><br><span class="line">法2</span><br><span class="line"></span><br><span class="line">![image-20220209125408554](C:\Users\86152\Desktop\新建文件夹\image-20220209125408554.png)</span><br><span class="line"></span><br><span class="line">- 漏洞解析</span><br><span class="line"></span><br><span class="line">- 自 PHP 5.3.0 起，PHP 支持基于每个目录的 .htaccess 风格的 INI 文件。</span><br><span class="line"></span><br><span class="line">- **想要引发 .user.ini 解析漏洞需要三个前提条件：**</span><br><span class="line"></span><br><span class="line">- - 服务器脚本语言为PHP</span><br><span class="line">  - 服务器使用CGI／FastCGI模式</span><br><span class="line">  - 上传目录下要有可执行的php文件</span><br><span class="line"></span><br><span class="line">- 先来创建一个 .user.ini 文件并写入一下内容：auto_prepend_file=x.png</span><br><span class="line"></span><br><span class="line">- 上传 .user.ini 后，再上传一个 x.png 文件，此时 x.png 文件只要有符合 php 语言的代码就会执行。</span><br><span class="line"></span><br><span class="line">#### 第六关：大小写绕过</span><br><span class="line"></span><br><span class="line">- 根据提示</span><br><span class="line"></span><br><span class="line">  ![image-20220209125722896](C:\Users\86152\Desktop\新建文件夹\image-20220209125722896.png)</span><br><span class="line"></span><br><span class="line">- 源码分析</span><br><span class="line"></span><br><span class="line">~~~php</span><br><span class="line">$is_upload = false;</span><br><span class="line">$msg = null;</span><br><span class="line">if (isset($_POST[&#x27;submit&#x27;])) &#123;</span><br><span class="line">    if (file_exists(UPLOAD_PATH)) &#123;</span><br><span class="line">        $deny_ext = array(&quot;.php&quot;,&quot;.php5&quot;,&quot;.php4&quot;,&quot;.php3&quot;,&quot;.php2&quot;,&quot;.html&quot;,&quot;.htm&quot;,&quot;.phtml&quot;,&quot;.pht&quot;,&quot;.pHp&quot;,&quot;.pHp5&quot;,&quot;.pHp4&quot;,&quot;.pHp3&quot;,&quot;.pHp2&quot;,&quot;.Html&quot;,&quot;.Htm&quot;,&quot;.pHtml&quot;,&quot;.jsp&quot;,&quot;.jspa&quot;,&quot;.jspx&quot;,&quot;.jsw&quot;,&quot;.jsv&quot;,&quot;.jspf&quot;,&quot;.jtml&quot;,&quot;.jSp&quot;,&quot;.jSpx&quot;,&quot;.jSpa&quot;,&quot;.jSw&quot;,&quot;.jSv&quot;,&quot;.jSpf&quot;,&quot;.jHtml&quot;,&quot;.asp&quot;,&quot;.aspx&quot;,&quot;.asa&quot;,&quot;.asax&quot;,&quot;.ascx&quot;,&quot;.ashx&quot;,&quot;.asmx&quot;,&quot;.cer&quot;,&quot;.aSp&quot;,&quot;.aSpx&quot;,&quot;.aSa&quot;,&quot;.aSax&quot;,&quot;.aScx&quot;,&quot;.aShx&quot;,&quot;.aSmx&quot;,&quot;.cEr&quot;,&quot;.sWf&quot;,&quot;.swf&quot;,&quot;.htaccess&quot;);</span><br><span class="line">        $file_name = trim($_FILES[&#x27;upload_file&#x27;][&#x27;name&#x27;]);</span><br><span class="line">        $file_name = deldot($file_name);//删除文件名末尾的点</span><br><span class="line">        $file_ext = strrchr($file_name, &#x27;.&#x27;);</span><br><span class="line">        $file_ext = strtolower($file_ext); //转换为小写</span><br><span class="line">    </span><br><span class="line">        // 通过源代码我们可以发现，黑名单里虽然过滤的很全面，但是在下面的后缀名处理之中却出现了纰漏，没有将后缀名转换为小写。只是将文件名转化为小写</span><br><span class="line">        </span><br><span class="line">        $file_ext = str_ireplace(&#x27;::$DATA&#x27;, &#x27;&#x27;, $file_ext);//去除字符串::$DATA</span><br><span class="line">        $file_ext = trim($file_ext); //首尾去空</span><br><span class="line">        </span><br><span class="line">        if (!in_array($file_ext, $deny_ext)) &#123;</span><br><span class="line">            $temp_file = $_FILES[&#x27;upload_file&#x27;][&#x27;tmp_name&#x27;];</span><br><span class="line">            $img_path = UPLOAD_PATH.&#x27;/&#x27;.$file_name;</span><br><span class="line">            if (move_uploaded_file($temp_file, $img_path)) &#123;</span><br><span class="line">                $is_upload = true;</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                $msg = &#x27;上传出错！&#x27;;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            $msg = &#x27;此文件类型不允许上传！&#x27;;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        $msg = UPLOAD_PATH . &#x27;文件夹不存在,请手工创建！&#x27;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h4 id="第七关：空格绕过"><a href="#第七关：空格绕过" class="headerlink" title="第七关：空格绕过"></a>第七关：空格绕过</h4><ul>
+<li><p>根据提示：</p>
+<p><img src="C:\Users\86152\Desktop\新建文件夹\image-20220210114027547.png" alt="image-20220210114027547"></p>
+</li>
+<li><p>绕过方法：</p>
+</li>
+<li><ul>
+<li>通过抓取上传数据包，修改上传的文件后缀，实现上传。</li>
+</ul>
+</li>
+<li><p>绕过原理：</p>
+</li>
+</ul>
+<p>​        在windows系统下，如果文件名以“.”或者空格作为结尾，系统会自动删除“.”与空格，利用此特性也可以绕过黑名单验证。apache中可以利用点结尾和空格绕过，asp和aspx中可以用空格绕过。</p>
+<h4 id="第八关：点绕过"><a href="#第八关：点绕过" class="headerlink" title="第八关：点绕过"></a>第八关：点绕过</h4><ul>
+<li><p>根据提示：本pass禁止上传所有可以解析的后缀！</p>
+</li>
+<li><p>绕过方法：</p>
+</li>
+<li><ul>
+<li>通过抓取上传数据包，修改上传的文件后缀，实现上传。</li>
+</ul>
+</li>
+</ul>
+<p><img src="C:\Users\86152\Desktop\新建文件夹\image-20220210114458151.png" alt="image-20220210114458151"></p>
+<ul>
+<li>绕过原理：</li>
+</ul>
+<p>​    在windows系统下，如果文件名以“.”或者空格作为结尾，系统会自动删除“.”与空格，利用此特性也可以绕过黑名单验证。apache中可以利用点结尾和空格绕过，asp和aspx中可以用空格绕过。</p>
+<h4 id="第九关：-DATA绕过"><a href="#第九关：-DATA绕过" class="headerlink" title="第九关：::$DATA绕过"></a>第九关：::$DATA绕过</h4><ul>
+<li>根据提示：</li>
+</ul>
+<p><img src="C:\Users\86152\Desktop\新建文件夹\image-20220210114637244.png" alt="image-20220210114637244"></p>
+<ul>
+<li><p>绕过方法：</p>
+</li>
+<li><ul>
+<li><p>通过抓取上传数据包，修改上传的文件后缀，实现上传。</p>
+<p><img src="C:\Users\86152\Desktop\新建文件夹\image-20220210115211432.png" alt="image-20220210115211432"></p>
+</li>
+</ul>
+</li>
+<li><p>绕过原理：</p>
+</li>
+</ul>
+<p>源代码中没有</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$file_ext</span> = <span class="title function_ invoke__">str_ireplace</span>(<span class="string">&#x27;::$DATA&#x27;</span>, <span class="string">&#x27;&#x27;</span>, <span class="variable">$file_ext</span>);<span class="comment">//去除字符串::$DATA</span></span><br></pre></td></tr></table></figure>
+
+<p>这一行代码</p>
+<p>而::$DATA他的目的就是不检查后缀名</p>
+<h4 id="第十关：点-空格-点绕过"><a href="#第十关：点-空格-点绕过" class="headerlink" title="第十关：点+空格+点绕过"></a>第十关：点+空格+点绕过</h4><ul>
+<li><p>根据提示：本pass只允许上传.jpg|.png|.gif后缀的文件！</p>
+</li>
+<li><p>绕过方法：</p>
+</li>
+<li><ul>
+<li>通过抓取上传数据包，修改上传的文件后缀，实现上传。</li>
+</ul>
+</li>
+</ul>
+<p><img src="C:\Users\86152\Desktop\新建文件夹\image-20220210115737152.png" alt="image-20220210115737152"></p>
+<ul>
+<li><p>绕过原理：</p>
+<ul>
+<li><p>在windows系统下，如果文件名以“.”或者空格作为结尾，系统会自动删除“.”与空格，利用此特性也可以绕过黑名单验证。apache中可以利用点结尾和空格绕过，asp和aspx中可以用空格绕过。</p>
+</li>
+<li><p>经过脚本一系列的处理之后原本.php. .的后缀名变成了.php. ，而由于Windows的特性，又将文件末尾的点给去除了，最终就存成.php的文件</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="第十一关：双写绕过"><a href="#第十一关：双写绕过" class="headerlink" title="第十一关：双写绕过"></a>第十一关：双写绕过</h4><ul>
+<li>根据提示：</li>
+</ul>
+<p><img src="C:\Users\86152\Desktop\新建文件夹\image-20220210124149521.png" alt="image-20220210124149521"></p>
+<ul>
+<li><p>绕过方法：</p>
+</li>
+<li><ul>
+<li>假设：将代码中的字符串里面PHP替换为空， a.php —&gt; a.</li>
+<li>如果是一次过滤：a.pphphp  —-&gt; a.php</li>
+<li>如果是循环过滤a.pphphp  —-&gt; a.</li>
+<li>那么我们就可以上传数据包中修改数据来通过：xxxxx.php. . 来进行绕过。</li>
+</ul>
+</li>
+</ul>
+<h4 id="第十二关：-00截断"><a href="#第十二关：-00截断" class="headerlink" title="第十二关：%00截断"></a>第十二关：%00截断</h4><ul>
+<li><p>根据提示：</p>
+<p>本pass上传路径可控！</p>
+</li>
+<li><p>绕过方法：</p>
+</li>
+<li><ul>
+<li>当是POST接收情况的时候，需要对 %00 做一个URL编码</li>
+<li>直接写%00也没问题。</li>
+</ul>
+</li>
+</ul>
+
+    
+
+    
+    <div class="page-reward">
+      <a href="javascript:void(0);" class="page-reward-btn tooltip-top" target="_self">
+        <div class="tooltip tooltip-east">
+          <span class="tooltip-item">
+            赏
+          </span>
+          <span class="tooltip-content">
+            <span class="tooltip-text">
+              <span class="tooltip-inner">
+                <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i
+                    class="icon icon-quo-right"></i></p>
+                <div class="reward-box">
+                  
+                  <div class="reward-box-item">
+                    <img class="reward-img" src="/img/alipay.jpg">
+                    <span class="reward-type">支付宝</span>
+                  </div>
+                  
+                  
+                  <div class="reward-box-item">
+                    <img class="reward-img" src="/img/weixin.png">
+                    <span class="reward-type">微信</span>
+                  </div>
+                  
+                </div>
+              </span>
+            </span>
+          </span>
+        </div>
+      </a>
+    </div>
+    
+
+    
+    <div class="declare"> 
+      <ul class="post-copyright">
+        <li>
+          <strong>本文作者：</strong>
+          Whirlpool
+        </li>
+        <li>
+          <strong>本文链接：</strong>
+          <a href="http://example.com/2022/03/16/我的文章/文件上传漏洞实战/" title="" target="_blank">http://example.com/2022/03/16/我的文章/文件上传漏洞实战/</a>
+        </li>
+        
+        <li>
+          <strong>版权声明： </strong>
           
-          
+          本博客所有文章除特别声明外，均采用 <a href="https://github.com/JoeyBling/hexo-theme-yilia-plus/blob/master/LICENSE" rel="external nofollow" target="_blank">MIT</a> 许可协议。转载请注明出处！
+        </li>
+        
+      </ul>
+    </div>
+    
 
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+    
+
+    
+
+    
+    
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a> -->
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2022/03/16/%E6%88%91%E7%9A%84%E6%96%87%E7%AB%A0/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E5%AE%9E%E6%88%98/" alt="微信分享二维码"> -->
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+
+    
+    <div class="clearfix"></div>
+  </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2022/03/16/%E6%88%91%E7%9A%84%E6%96%87%E7%AB%A0/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/" class="archive-article-date">
-        <time datetime="2022-03-16T04:38:44.279Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-03-16</time>
-</a>
 
-        </div>
-    	 
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2022/03/07/%E6%88%91%E7%9A%84%E6%96%87%E7%AB%A0/xss%E9%9D%B6%E5%9C%BA/" class="archive-article-date">
-        <time datetime="2022-03-07T12:03:58.773Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-03-07</time>
-</a>
-
-        </div>
-    	 
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2022/03/01/%E6%88%91%E7%9A%84%E6%96%87%E7%AB%A0/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B3%A8%E5%85%A5/" class="archive-article-date">
-        <time datetime="2022-03-01T14:45:59.975Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-03-01</time>
-</a>
-
-        </div>
-    	 
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2022/02/27/%E6%88%91%E7%9A%84%E6%96%87%E7%AB%A0/sql%E5%9F%BA%E7%A1%80/" class="archive-article-date">
-        <time datetime="2022-02-27T08:24:39.300Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-02-27</time>
-</a>
-
-        </div>
-    	 
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2022/02/27/%E6%88%91%E7%9A%84%E6%96%87%E7%AB%A0/sqlmap%E5%9F%BA%E7%A1%80/" class="archive-article-date">
-        <time datetime="2022-02-27T07:38:59.257Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-02-27</time>
-</a>
-
-        </div>
-    	 
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2022/02/24/%E6%88%91%E7%9A%84%E6%96%87%E7%AB%A0/%E6%AD%A3%E5%88%99%E5%8C%B9%E9%85%8D/" class="archive-article-date">
-        <time datetime="2022-02-24T13:26:43.181Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-02-24</time>
-</a>
-
-        </div>
-    	 
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2022/02/23/%E6%88%91%E7%9A%84%E6%96%87%E7%AB%A0/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/" class="archive-article-date">
-        <time datetime="2022-02-23T14:45:47.039Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-02-23</time>
-</a>
-
-        </div>
-    	 
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2022/02/23/%E6%88%91%E7%9A%84%E6%96%87%E7%AB%A0/%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" class="archive-article-date">
-        <time datetime="2022-02-23T11:22:10.784Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-02-23</time>
-</a>
-
-        </div>
-    	 
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2022/03/16/%E6%88%91%E7%9A%84%E6%96%87%E7%AB%A0/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title"></div>
+      <i class="icon-circle-right"></i>
+    </a>
   
+</nav>
 
-    
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+
+
+
+
+
+
 
 
           </div>
@@ -479,8 +609,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: true,

